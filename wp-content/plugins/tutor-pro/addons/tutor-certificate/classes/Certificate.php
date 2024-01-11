@@ -1,27 +1,76 @@
 <?php
-
 /**
- * Tutor Multi Instructor
+ * Certificate
+ *
+ * @package TutorPro\Addon
+ * @subpackage Certificate
+ * @author Themeum <support@themeum.com>
+ * @link https://themeum.com
+ * @since 2.0.0
  */
 
 namespace TUTOR_CERT;
 
+/**
+ * Class Certificate
+ *
+ * @since 2.0.0
+ */
 class Certificate {
+	/**
+	 * Template
+	 *
+	 * @var string
+	 */
 	private $template;
-	private $certificates_dir_name          = 'tutor-certificates';
-	private $certificate_stored_key         = 'tutor_certificate_has_image';
-	public static $template_meta_key        = 'tutor_course_certificate_template';
+	/**
+	 * Directory name
+	 *
+	 * @var string
+	 */
+	public $certificates_dir_name = 'tutor-certificates';
+	/**
+	 * Store Key
+	 *
+	 * @var string
+	 */
+	public $certificate_stored_key = 'tutor_certificate_has_image';
+	/**
+	 * Meta key
+	 *
+	 * @var string
+	 */
+	public static $template_meta_key = 'tutor_course_certificate_template';
+	/**
+	 * Image Url Base
+	 *
+	 * @var string
+	 */
 	public static $certificate_img_url_base = 'https://preview.tutorlms.com/certificate-templates/';
 
+	/**
+	 * Register hooks
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param boolean $reuse reuse.
+	 */
 	public function __construct( $reuse = false ) {
-		if ( ! function_exists( 'tutor_utils' ) || $reuse === true ) {
+		if ( ! function_exists( 'tutor_utils' ) || true === $reuse ) {
 			return;
 		}
 
 		add_action( 'tutor_course/single/actions_btn_group/before', array( $this, 'certificate_download_btn' ) );
 
 		add_action( 'wp_loaded', array( $this, 'get_fonts' ) );
-		add_action( 'template_redirect', array( $this, 'view_certificate' ) );
+
+		/**
+		 * Hook `template_redirect` to `template_include`
+		 * for elementor custom header footer support.
+		 *
+		 * @since 2.4.0
+		 */
+		add_filter( 'template_include', array( $this, 'view_certificate' ) );
 
 		add_action( 'wp_ajax_tutor_generate_course_certificate', array( $this, 'send_certificate_html' ) );
 		add_action( 'wp_ajax_nopriv_tutor_generate_course_certificate', array( $this, 'send_certificate_html' ) );
@@ -30,7 +79,8 @@ class Certificate {
 		add_action( 'wp_ajax_nopriv_tutor_store_certificate_image', array( $this, 'store_certificate_image' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'load_script' ) );
-		
+		add_action( 'wp_head', array( $this, 'certificate_header_content' ) );
+
 		/**
 		 * Certificate template metabox in course for per course template
 		 *
@@ -57,11 +107,66 @@ class Certificate {
 		 */
 		add_filter( 'tutor/course/single/sidebar/metadata', array( $this, 'show_course_has_certificate' ), 10, 2 );
 
-		// Download certificate button for completed courses in all kind of archive
+		// Download certificate button for completed courses in all kind of archive.
 		add_filter( 'tutor_course/loop/start/button', array( $this, 'download_btn_in_archive' ), 99, 2 );
-		
+
 		add_action( 'admin_footer', array( $this, 'add_button_to_certificate_edit_page' ) );
-		  
+
+		add_action( 'tutor_course/single/after/topics', array( $this, 'add_certificate_showcase' ) );
+
+		// Alter yoast og tags.
+		add_filter( 'wpseo_opengraph_url', array( $this, 'remove_yoast_seo_og_tags' ), 10, 1 );
+		add_filter( 'wpseo_opengraph_title', array( $this, 'remove_yoast_seo_og_tags' ), 10, 1 );
+		add_filter( 'wpseo_opengraph_title', array( $this, 'remove_yoast_seo_og_tags' ), 10, 1 );
+		add_filter( 'wpseo_opengraph_desc', array( $this, 'remove_yoast_seo_og_tags' ), 10, 1 );
+		add_filter( 'wpseo_opengraph_image', array( $this, 'remove_yoast_seo_og_tags' ), 10, 1 );
+	}
+
+	/**
+	 * Certificate Showcase
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param int $course_id course id.
+	 *
+	 * @return void
+	 */
+	public function add_certificate_showcase( $course_id ) {
+		$is_enabled = (bool) tutor_utils()->get_option( 'enable_certificate_showcase', false );
+		if ( ! $is_enabled ) {
+			return;
+		}
+
+		$template_key = get_post_meta( $course_id, self::$template_meta_key, true );
+		if ( in_array( $template_key, array( '', 'none', 'off' ) ) ) {
+			return;
+		}
+
+		$templates = $this->get_templates();
+		if ( ! isset( $templates[ $template_key ] ) ) {
+			return;
+		}
+
+		$template = $templates[ $template_key ];
+		?>
+
+		<div id="tutor-certificate-showcase" class="tutor-my-52">
+			<div class="tutor-cs-text">
+				<div>
+					<h3 class="tutor-course-details-widget-title tutor-fs-5 tutor-fw-bold tutor-color-black tutor-mb-8">
+						<?php echo esc_html( tutor_utils()->get_option( 'certificate_showcase_title', '' ) ); ?>
+					</h3>
+					<p><?php echo esc_html( tutor_utils()->get_option( 'certificate_showcase_desc', '' ) ); ?></p>
+				</div>
+			</div>
+			<div class="tutor-cs-wrapper">
+				<div class="tutor-cs-image-wrapper">
+					<img src="<?php echo esc_url( $template['preview_src'] ); ?>" alt="selected template">
+				</div>
+			</div>	
+		</div>
+
+		<?php
 	}
 
 	/**
@@ -94,11 +199,19 @@ class Certificate {
 		}
 	}
 
+	/**
+	 * Download button in archive
+	 *
+	 * @param string $html html.
+	 * @param int    $course_id course id.
+	 *
+	 * @return string
+	 */
 	public function download_btn_in_archive( $html, $course_id ) {
 		$completed_percent   = tutor_utils()->get_course_completed_percent();
 		$is_completed_course = tutor_utils()->is_completed_course();
 		$completed_anyway    = $is_completed_course || $completed_percent >= 100;
-		// If course completed
+		// If course completed.
 		if ( $is_completed_course ) {
 			if ( $this->has_course_certificate_template( $course_id ) && $certificate_url = $this->get_certificate( $course_id ) ) {
 				$html = '<a href="' . $certificate_url . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block">
@@ -118,8 +231,8 @@ class Certificate {
 	 * Get certificate public URL.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param string $cert_hash	unique hash.
+	 *
+	 * @param string $cert_hash unique hash.
 	 * @return string
 	 */
 	public function tutor_certificate_public_url( $cert_hash ) {
@@ -152,19 +265,36 @@ class Certificate {
 		);
 	}
 
+	/**
+	 * Load field scripts.
+	 *
+	 * @return void
+	 */
 	public function load_field_scripts() {
-		if ( isset( $_GET['page'] ) && $_GET['page'] == 'tutor_settings' ) {
+		if ( isset( $_GET['page'] ) && 'tutor_settings' === $_GET['page'] ) {
 			wp_enqueue_style( 'tutor-pro-certificate-field-css', TUTOR_CERT()->url . 'assets/css/certificate-field.css', array(), TUTOR_PRO_VERSION );
-			// wp_enqueue_script( 'tutor-pro-certificate-field-js', TUTOR_CERT()->url . 'assets/js/certificate-field.js', array( 'jquery', 'wp-i18n' ), TUTOR_PRO_VERSION, true );
 		}
 	}
 
+	/**
+	 * Save certificate template meta.
+	 *
+	 * @param [type] $post_id
+	 * @return void
+	 */
 	public function save_certificate_template_meta( $post_id ) {
 		if ( isset( $_POST[ self::$template_meta_key ] ) ) {
 			update_post_meta( $post_id, self::$template_meta_key, sanitize_text_field( $_POST[ self::$template_meta_key ] ) );
 		}
 	}
 
+	/**
+	 * Frontend course certificate
+	 *
+	 * @param mixed $post post.
+	 *
+	 * @return void
+	 */
 	public function frontend_course_certificate( $post ) {
 		?>
 		<div class="tutor-course-builder-section tutor-course-builder-info">
@@ -187,6 +317,11 @@ class Certificate {
 		<?php
 	}
 
+	/**
+	 * Load Script
+	 *
+	 * @return void
+	 */
 	public function load_script() {
 		if ( ! empty( $_GET['cert_hash'] ) ) {
 			$base = tutor_pro()->url . 'addons/tutor-certificate/assets/js/';
@@ -194,6 +329,11 @@ class Certificate {
 		}
 	}
 
+	/**
+	 * Get Fonts
+	 *
+	 * @return void
+	 */
 	public function get_fonts() {
 		if ( tutor_utils()->array_get( 'tutor_action', $_GET ) !== 'get_fonts' ) {
 			return; }
@@ -206,7 +346,7 @@ class Certificate {
 
 		$font_faces = str_replace( './fonts/', $url_base, $default_fonts );
 
-		// Now load template fonts
+		// Now load template fonts.
 		$this->prepare_template_data( $_GET['course_id'] );
 		$font_css = $this->template['path'] . 'font.css';
 		if ( file_exists( $font_css ) ) {
@@ -218,6 +358,11 @@ class Certificate {
 		exit( $font_faces );
 	}
 
+	/**
+	 * Send Certificate HTML
+	 *
+	 * @return void
+	 */
 	public function send_certificate_html() {
 		$course_id = tutor_utils()->array_get( 'course_id', $_POST, '' );
 		$cert_hash = tutor_utils()->array_get( 'certificate_hash', $_POST, null );
@@ -246,7 +391,7 @@ class Certificate {
 				exit;
 			}
 
-			// Get certificate html
+			// Get certificate html.
 			$content = $this->generate_certificate( $course_id, $completed );
 			wp_send_json_success( array( 'html' => $content ) );
 		}
@@ -254,6 +399,13 @@ class Certificate {
 		wp_send_json_error( array( 'message' => __( 'Invalid Course ID', 'tutor' ) ) );
 	}
 
+	/**
+	 * Course Platform Path
+	 *
+	 * @param string $path path.
+	 *
+	 * @return string
+	 */
 	private function cross_platform_path( $path ) {
 		$path = str_replace( '/', DIRECTORY_SEPARATOR, $path );
 		$path = str_replace( '\\', DIRECTORY_SEPARATOR, $path );
@@ -264,31 +416,31 @@ class Certificate {
 	private function prepare_template_data( $course_id, $check_if_none = false ) {
 		if ( ! $this->template ) {
 
-			// Get from settings. Set default one if not set somehow
+			// Get from settings. Set default one if not set somehow.
 			$template               = tutor_utils()->get_option( 'certificate_template' );
 			! $template ? $template = 'default' : 0;
 
 			$global_template = $template;
 
-			// Assign from course meta if custom one chosen
+			// Assign from course meta if custom one chosen.
 			$course_template = get_post_meta( $course_id, self::$template_meta_key, true );
 
-			// Get the selected template
-			$template_arg = array();
-			$template_arg[] = $template;
+			// Get the selected template.
+			$template_arg                      = array();
+			$template_arg[]                    = $template;
 			$course_template ? $template_arg[] = $course_template : 0;
-			$templates = $this->get_templates(false, false, $template_arg);
+			$templates                         = $this->get_templates( false, false, $template_arg );
 
 			( $course_template && isset( $templates[ $course_template ] ) ) ? $template = $course_template : 0;
 
-			// If explicitly set as none
+			// If explicitly set as none.
 			if ( $check_if_none && in_array( $course_template, array( 'none', 'off' ) ) ) {
 				return false;
 			}
 
-			// Make sure not to use templates from builder if the plugin is not active
+			// Make sure not to use templates from builder if the plugin is not active.
 			if ( strpos( $template, 'tutor_cb_' ) === 0 && ! tutor_utils()->is_plugin_active( 'tutor-lms-certificate-builder/tutor-lms-certificate-builder.php' ) ) {
-				// Use default if builder is not active somehow
+				// Use default if builder is not active somehow.
 				$template = $global_template;
 			}
 
@@ -297,17 +449,17 @@ class Certificate {
 	}
 
 	public function store_certificate_image() {
-		// Collect post data
+		// Collect post data.
 		$hash      = sanitize_text_field( tutor_utils()->array_get( 'cert_hash', $_POST, '' ) );
 		$completed = is_string( $hash ) ? $this->completed_course( $hash ) : null;
 
-		// Check if the course is complete
+		// Check if the course is complete.
 		if ( ! $completed ) {
 			wp_send_json_error( array( 'message' => __( 'Course not yet completed', 'tutor-pro' ) ) );
 			return;
 		}
 
-		// Check if valid image
+		// Check if valid image.
 		if (
 			! isset( $_FILES['certificate_image'] ) ||
 			$_FILES['certificate_image']['error'] ||
@@ -317,21 +469,21 @@ class Certificate {
 			wp_send_json_error( array( 'message' => __( 'Certificate Image Error', 'tutor-pro' ) ) );
 		}
 
-		// et the dir from outside of the filter hook. Otherwise infinity loop will coccur.
+		// The dir from outside of the filter hook. Otherwise infinity loop will coccur.
 		$certificates_dir = wp_upload_dir()['basedir'] . DIRECTORY_SEPARATOR . $this->certificates_dir_name;
 		$rand_string      = substr( str_shuffle( str_repeat( $x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil( 10 / strlen( $x ) ) ) ), 1, 10 );
 
-		// Store new file
+		// Store new file.
 		wp_mkdir_p( $certificates_dir );
 		$file_dest = $certificates_dir . DIRECTORY_SEPARATOR . $rand_string . '-' . $hash . '.jpg';
 		move_uploaded_file( $_FILES['certificate_image']['tmp_name'], $file_dest );
 
-		// Delete old one
+		// Delete old one.
 		$old_rand_string = get_comment_meta( $completed->certificate_id, $this->certificate_stored_key, true );
 		$old_path        = $this->cross_platform_path( $certificates_dir . '/' . $old_rand_string . '-' . $hash . '.jpg' );
 		file_exists( $old_path ) ? unlink( $old_path ) : 0;
 
-		// Update new
+		// Update new.
 		update_comment_meta( $completed->certificate_id, $this->certificate_stored_key, $rand_string );
 
 		wp_send_json_success();
@@ -341,46 +493,27 @@ class Certificate {
 	 * View Certificate
 	 *
 	 * @since 1.5.1
-	 * 
-	 * @return void
+	 *
+	 * @param string $template template path.
+	 *
+	 * @return string
 	 */
-	public function view_certificate() {
+	public function view_certificate( $template ) {
+
 		$cert_hash = sanitize_text_field( tutor_utils()->array_get( 'cert_hash', $_GET ) );
 
 		if ( ! $cert_hash || ! empty( $_GET['tutor_action'] ) ) {
-			return;
+			return $template;
 		}
 
 		$completed = $this->completed_course( $cert_hash );
 		if ( ! is_object( $completed ) || ! property_exists( $completed, 'completed_user_id' ) ) {
-			return;
+			return $template;
 		}
-
-		$course     = get_post( $completed->course_id );
-		$upload_dir = wp_upload_dir();
-
-		$certificate_dir_url  = $upload_dir['baseurl'] . '/' . $this->certificates_dir_name;
-		$certificate_dir_path = $upload_dir['basedir'] . '/' . $this->certificates_dir_name;
-
-		$rand_string = get_comment_meta( $completed->certificate_id, $this->certificate_stored_key, true );
-
-		$cert_path                               = '/' . $rand_string . '-' . $cert_hash . '.jpg';
-		$cert_file                               = $certificate_dir_path . $cert_path;
-		! file_exists( $cert_file ) ? $cert_file = null : 0;
-
-		$generate_cert              = ! $cert_file || ( isset( $_GET['regenerate'] ) && $_GET['regenerate'] == 1 );
-		$generate_cert ? $cert_file = null : 0;
-
-		$cert_img = $generate_cert ? get_admin_url() . 'images/loading.gif' : $certificate_dir_url . $cert_path;
-		$cert_url = $this->tutor_certificate_public_url( $cert_hash );
-
-		$this->certificate_header_content( $course->post_title, $cert_img );
-
-		// Similar to compact('course', 'cert_file', 'cert_img', 'cert_hash', 'completed'), true)
 
 		/**
 		 * Load the certificate in WordPress native page.
-		 * 
+		 *
 		 * @since 2.1.7
 		 */
 		global $post;
@@ -389,28 +522,37 @@ class Certificate {
 			$certificate_page_id = (int) tutor_utils()->get_option( 'tutor_certificate_page' );
 			if ( $post->ID === $certificate_page_id ) {
 				set_transient( 'tutor_cert_hash', $cert_hash );
-				include TUTOR_CERT()->path . '/views/single-certificate.php';
-				exit;
+				return TUTOR_CERT()->path . '/views/single-certificate.php';
 			}
 		}
+
+		return $template;
 	}
 
+	/**
+	 * Get Signature URL
+	 *
+	 * @param int   $instructor_id instructor id.
+	 * @param mixed $use_default default.
+	 *
+	 * @return string
+	 */
 	public function get_signature_url( $instructor_id, $use_default = null ) {
 
-		// Get personal signature first
+		// Get personal signature first.
 		$custom_signature    = ( new Instructor_Signature( false ) )->get_instructor_signature( $instructor_id );
 		$signature_image_url = $custom_signature['url'];
 
-		// Set default signature from global setting if personal one is not set
+		// Set default signature from global setting if personal one is not set.
 		if ( ! $signature_image_url ) {
-			// Get default ID
+			// Get default ID.
 			$default_sinature_id = (int) tutor_utils()->get_option( 'tutor_cert_signature_image_id' );
 
 			if ( ! $default_sinature_id && $use_default === false ) {
 				return null;
 			}
 
-			// Assign default image from plugin file system if even global one is not set yet
+			// Assign default image from plugin file system if even global one is not set yet.
 			$signature_image_url = $default_sinature_id ?
 										wp_get_attachment_url( $default_sinature_id ) :
 										TUTOR_CERT()->url . 'assets/images/signature.png';
@@ -419,6 +561,14 @@ class Certificate {
 		return $signature_image_url;
 	}
 
+	/**
+	 * Generate Certificate.
+	 *
+	 * @param int     $course_id course id.
+	 * @param boolean $completed completed.
+	 *
+	 * @return mixed
+	 */
 	public function generate_certificate( $course_id, $completed = false ) {
 		$duration        = get_post_meta( $course_id, '_course_duration', true );
 		$durationHours   = (int) tutor_utils()->avalue_dot( 'hours', $duration );
@@ -431,7 +581,7 @@ class Certificate {
 			$wp_date_format = get_option( 'date_format' );
 			$completed_date = date( $wp_date_format, strtotime( $completed->completion_date ) );
 
-			// Translate month name
+			// Translate month name.
 			$converter      = function ( $matches ) {
 				$month = __( $matches[0] );
 
@@ -442,7 +592,7 @@ class Certificate {
 			};
 			$completed_date = preg_replace_callback( '/[a-z]+/i', $converter, $completed_date );
 
-			// Translate day and year digits
+			// Translate day and year digits.
 			$completed_date = preg_replace_callback(
 				'/[0-9]/',
 				function ( $m ) {
@@ -452,10 +602,10 @@ class Certificate {
 			);
 		}
 
-		// Prepare signature image
+		// Prepare signature image.
 		$signature_image_url = $this->get_signature_url( $course->post_author );
 
-		// Include instructor name if enabled
+		// Include instructor name if enabled.
 		$enabled = tutor_utils()->get_option( 'show_instructor_name_on_certificate', false );
 
 		if ( $enabled ) {
@@ -474,15 +624,15 @@ class Certificate {
 			);
 		}
 
-		// Generate duration text
+		// Generate duration text.
 		$hour_text = '';
 		$min_text  = '';
 
 		if ( $durationHours ) {
-			$hour_text  = sprintf( _n( '%s hour', '%s hours', $durationHours, 'tutor-pro' ), number_format_i18n( $durationHours) );
+			$hour_text = sprintf( _n( '%s hour', '%s hours', $durationHours, 'tutor-pro' ), number_format_i18n( $durationHours ) );
 		}
 		if ( $durationMinutes ) {
-			$min_text	= sprintf( _n( '%s minute', '%s minutes', $durationMinutes, 'tutor-pro' ), number_format_i18n( $durationMinutes ) );
+			$min_text = sprintf( _n( '%s minute', '%s minutes', $durationMinutes, 'tutor-pro' ), number_format_i18n( $durationMinutes ) );
 		}
 
 		$duration_text = $hour_text . ' ' . $min_text;
@@ -513,11 +663,11 @@ class Certificate {
 		$certificate = $this->get_certificate( $course_id, true );
 
 		if ( ! $certificate || $this->prepare_template_data( $course_id, true ) === false ) {
-			// No certificate assigned or course not completed
+			// No certificate assigned or course not completed.
 			return;
 		}
 
-		extract( $certificate ); // $certificate_hash, $certificate_url
+		extract( $certificate ); // $certificate_hash, $certificate_url.
 
 		ob_start();
 		include TUTOR_CERT()->path . 'views/lesson-menu-after.php';
@@ -528,6 +678,11 @@ class Certificate {
 
 	/**
 	 * Generate certificate template selection UI in frontend and backend course builder
+	 *
+	 * @param mixed   $post post.
+	 * @param boolean $course_builder course builder.
+	 *
+	 * @return void
 	 */
 	public function render_template_selection_ui( $post = null, $course_builder = false ) {
 		$templates           = $this->get_templates( true, true );
@@ -537,7 +692,7 @@ class Certificate {
 		if ( $post && is_object( $post ) ) {
 
 			$template_field_name = self::$template_meta_key;
-			$template = get_post_meta( $post->ID, self::$template_meta_key, true );
+			$template            = get_post_meta( $post->ID, self::$template_meta_key, true );
 
 			( $template && isset( $templates[ $template ] ) ) ? $selected_template = $template : 0;
 		}
@@ -546,7 +701,7 @@ class Certificate {
 		include TUTOR_CERT()->path . 'views/' . $template . '.php';
 	}
 
-	public function get_templates( $add_none = false, $include_admins = false, $template_in=array() ) {
+	public function get_templates( $add_none = false, $include_admins = false, $template_in = array() ) {
 		$templates = array(
 			'default'     => array(
 				'name'        => 'Default',
@@ -627,7 +782,7 @@ class Certificate {
 		}
 
 		if ( $add_none ) {
-			// This block is only for course editor
+			// This block is only for course editor.
 			$filtered = array_merge(
 				array(
 					'none' => array(
@@ -657,7 +812,7 @@ class Certificate {
 	/**
 	 * Get completed course data
 	 *
-	 * @since v.1.5.1
+	 * @since 1.5.1
 	 */
 	public function completed_course( $cert_hash, $data = false ) {
 		global $wpdb;
@@ -678,31 +833,84 @@ class Certificate {
 
 
 	/**
-	 * Certificate header og content
+	 * Add meta tags for the certificate page
 	 *
-	 * @since v.1.5.1
+	 * @since 2.4.0
+	 *
+	 * @return void
 	 */
-	public function certificate_header_content( $course_title, $cert_img ) {
-		add_action(
-			'wp_head',
-			function () use ( $course_title, $cert_img ) {
-				$title       = __( 'Course Completion Certificate', 'tutor-pro' );
-				$description = __( 'My course completion certificate for', 'tutor-pro' ) . ' "' . $course_title . '"';
-				echo '
-				<meta property="og:title" content="' . $title . '"/>
-				<meta property="og:description" content="' . $description . '"/>
-				<meta property="og:image" content="' . $cert_img . '"/>
-				<meta name="twitter:title" content="Your title here"/>
-				<meta name="twitter:description" content="' . $description . '"/>
-				<meta name="twitter:image" content="' . $cert_img . '"/>
-			';
-			}
-		);
+	public function certificate_header_content() {
+		$cert_hash = sanitize_text_field( tutor_utils()->array_get( 'cert_hash', $_GET ) );
+
+		if ( ! $cert_hash || ! empty( $_GET['tutor_action'] ) ) {
+			return;
+		}
+
+		$completed = $this->completed_course( $cert_hash );
+		if ( ! is_object( $completed ) || ! property_exists( $completed, 'completed_user_id' ) ) {
+			return;
+		}
+
+		$course     = get_post( $completed->course_id );
+		$upload_dir = wp_upload_dir();
+
+		$certificate_dir_url  = $upload_dir['baseurl'] . '/' . $this->certificates_dir_name;
+		$certificate_dir_path = $upload_dir['basedir'] . '/' . $this->certificates_dir_name;
+
+		$rand_string = get_comment_meta( $completed->certificate_id, $this->certificate_stored_key, true );
+
+		$cert_path = '/' . $rand_string . '-' . $cert_hash . '.jpg';
+		$cert_file = $certificate_dir_path . $cert_path;
+
+		! file_exists( $cert_file ) ? $cert_file = null : 0;
+
+		$generate_cert              = ! $cert_file || ( isset( $_GET['regenerate'] ) && 1 == $_GET['regenerate'] );
+		$generate_cert ? $cert_file = null : 0;
+
+		$cert_img = $generate_cert ? get_admin_url() . 'images/loading.gif' : $certificate_dir_url . $cert_path;
+
+		$title       = __( 'Course Completion Certificate', 'tutor-pro' );
+		$description = __( 'My course completion certificate for', 'tutor-pro' ) . ' ' . $course->post_title;
+
+		$og_url = get_page_link();
+		if ( is_singular() && isset( $_GET['cert_hash'] ) ) {
+			// Get the current page's URL.
+			$og_url = trailingslashit( $og_url ) . '?cert_hash=' . $cert_hash;
+		}
+
+		echo '
+		<meta property="og:url" content="' . esc_url( $og_url ) . '" />
+		<meta property="og:title" content="' . esc_attr( $title ) . '"/>
+		<meta property="og:description" content="' . esc_attr( $description ) . '"/>
+		<meta property="og:image" content="' . esc_url( $cert_img ) . '"/>
+		<meta name="twitter:title" content="' . esc_attr( $title ) . '"/>
+		<meta name="twitter:description" content="' . esc_attr( $description ) . '"/>
+		<meta name="twitter:image" content="' . esc_url( $cert_img ) . '"/>
+		<meta name="twitter:card" content="summary_large_image">
+		';
+	}
+
+	/**
+	 * Remove yoast seo tags if it is certificate page
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $str og tag.
+	 *
+	 * @return string
+	 */
+	public function remove_yoast_seo_og_tags( $str ) {
+		$cert_hash = sanitize_text_field( tutor_utils()->array_get( 'cert_hash', $_GET ) );
+
+		if ( ! $cert_hash || ! empty( $_GET['tutor_action'] ) ) {
+			return $str;
+		}
+		return '';
 	}
 
 	public function get_certificate( $course_id, $full = false ) {
 
-		$is_completed = tutor_utils()->is_completed_course( $course_id );
+		$is_completed = tutor_utils()->is_completed_course( $course_id, 0, false );
 		$url          = $is_completed ? apply_filters( 'tutor_certificate_public_url', $is_completed->completed_hash ) : null;
 
 		if ( $full && $is_completed ) {

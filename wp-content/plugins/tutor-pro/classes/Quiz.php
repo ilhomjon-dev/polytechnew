@@ -29,6 +29,40 @@ class Quiz {
 		add_filter( 'tutor_quiz_question_data', array( $this, 'extend_question_data' ) );
 		add_action( 'tutor_quiz_question_form_after_answer_list', array( $this, 'extend_question_form' ) );
 		add_action( 'tutor_quiz_attempt_details_loop_after_row', array( $this, 'correct_answer_explanation_content' ), 10, 2 );
+		add_action( 'tutor_quiz_question_desc_field', array( $this, 'add_wp_editor_to_quiz_question_desc' ) );
+		add_action( 'tutor_quiz_question_desc_render', array( $this, 'render_question_description' ), 10, 2 );
+	}
+
+	/**
+	 * Add WP editor support to quiz question description.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param object $question_obj question object.
+	 *
+	 * @return void
+	 */
+	public function add_wp_editor_to_quiz_question_desc( $question_obj ) {
+		wp_editor(
+			$question_obj->question_description,
+			'tutor_quiz_desc_text_editor',
+			array( 'editor_height' => 150 )
+		);
+	}
+
+	/**
+	 * Render question description data.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param string $description description with HTML markup.
+	 * @param object $question question object.
+	 *
+	 * @return void
+	 */
+	public function render_question_description( $description, $question ) {
+		add_filter( 'wp_kses_allowed_html', Input::class . '::allow_iframe', 10, 2 );
+		echo do_shortcode( wp_kses_post( $description ) );
 	}
 
 	/**
@@ -45,7 +79,23 @@ class Quiz {
 
 		$question_id = Input::post( 'tutor_quiz_question_id', 0, Input::TYPE_INT );
 		if ( $question_id ) {
-			$data['answer_explanation'] = Input::post( 'answer_explanation', '', Input::TYPE_KSES_POST );
+			$explanation = Input::post( 'answer_explanation', '', Input::TYPE_KSES_POST );
+			if ( '<p><br></p>' === $explanation ) {
+				$explanation = '';
+			}
+
+			$data['answer_explanation'] = $explanation;
+		}
+
+		/**
+		 * WP editor support to Quiz question
+		 *
+		 * @since 2.2.3
+		 */
+		$html_mode = Input::post( 'is_html_active', false, Input::TYPE_BOOL );
+		if ( $html_mode ) {
+			add_filter( 'wp_kses_allowed_html', Input::class . '::allow_iframe', 10, 2 );
+			$data['question_description'] = Input::post( 'tutor_quiz_desc_text_editor', '', Input::TYPE_KSES_POST );
 		}
 
 		return $data;
@@ -87,7 +137,7 @@ class Quiz {
 	 * @return void
 	 */
 	public function correct_answer_explanation_content( $answer, $answer_status ) {
-		if ( strlen( trim( $answer->answer_explanation ) ) > 0 && 'pending' !== $answer_status ) :
+		if ( strlen( trim( wp_strip_all_tags( $answer->answer_explanation ) ) ) > 0 && 'pending' !== $answer_status ) :
 			?>
 			<tr>
 				<td colspan="100%" class="column-empty-state data-td-content" id="tutor-question-<?php echo esc_attr( $answer->question_id ); ?>" style="display:none;">

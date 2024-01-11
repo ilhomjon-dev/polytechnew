@@ -427,6 +427,45 @@ class InsightCore_Importer_2 extends WP_Importer {
 	}
 
 	/**
+	 * An alternative function of deprecated function
+	 * @param $page_title
+	 * @param $output
+	 * @param $post_type
+	 *
+	 * @return array|WP_Post|null
+	 */
+	public function get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' ) {
+		$query = new WP_Query(
+			array(
+				'post_type'              => $post_type,
+				'title'                  => $page_title,
+				'post_status'            => 'all',
+				'posts_per_page'         => 1,
+				'no_found_rows'          => true,
+				'ignore_sticky_posts'    => true,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'orderby'                => 'date',
+				'order'                  => 'ASC',
+			)
+		);
+
+		if ( ! empty( $query->post ) ) {
+			$_post = $query->post;
+
+			if ( ARRAY_A === $output ) {
+				return $_post->to_array();
+			} elseif ( ARRAY_N === $output ) {
+				return array_values( $_post->to_array() );
+			}
+
+			return $_post;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Page Options
 	 */
 	function import_page_options() {
@@ -440,7 +479,7 @@ class InsightCore_Importer_2 extends WP_Importer {
 			}
 
 			if ( ! empty( $pages['page_on_front'] ) ) {
-				$page = get_page_by_title( $pages['page_on_front'] );
+				$page = $this->get_page_by_title( $pages['page_on_front'] );
 
 				if ( ! empty( $page ) ) {
 					update_option( 'page_on_front', $page->ID );
@@ -448,7 +487,7 @@ class InsightCore_Importer_2 extends WP_Importer {
 			}
 
 			if ( ! empty( $pages['page_for_posts'] ) ) {
-				$page = get_page_by_title( $pages['page_for_posts'] );
+				$page = $this->get_page_by_title( $pages['page_for_posts'] );
 
 				if ( ! empty( $page ) ) {
 					update_option( 'page_for_posts', $page->ID );
@@ -1085,7 +1124,7 @@ class InsightCore_Importer_2 extends WP_Importer {
 		);
 
 		foreach ( $woopages as $woo_page_name => $woo_page_title ) {
-			$woopage = get_page_by_title( $woo_page_title );
+			$woopage = $this->get_page_by_title( $woo_page_title );
 			if ( isset( $woopage ) && $woopage->ID ) {
 				update_option( $woo_page_name, $woopage->ID );
 			}

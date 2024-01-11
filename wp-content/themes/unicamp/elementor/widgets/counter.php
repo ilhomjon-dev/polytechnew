@@ -7,7 +7,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Utils;
 
 defined( 'ABSPATH' ) || exit;
@@ -545,7 +545,9 @@ class Widget_Counter extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'number',
 			'selector' => '{{WRAPPER}} .counter-number-wrap',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 		] );
 
 		$this->start_controls_tabs( 'number_colors' );
@@ -630,7 +632,9 @@ class Widget_Counter extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'title',
 			'selector' => '{{WRAPPER}} .counter-heading',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 		] );
 
 		$this->start_controls_tabs( 'title_colors' );

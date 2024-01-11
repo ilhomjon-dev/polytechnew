@@ -4,11 +4,6 @@
  *
  * @package Course List
  */
-/*
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
-*/
 
 use TUTOR\Course_List;
 use TUTOR_REPORT\Analytics;
@@ -83,7 +78,7 @@ $courses = new Course_List();
 								<td>
 									<div class="tutor-d-flex tutor-align-center tutor-justify-end tutor-gap-1">
 										<a href="<?php echo esc_url( admin_url( 'admin.php?page=tutor_report&sub_page=courses&course_id=' . $course->ID ) ); ?>" class="tutor-btn tutor-btn-outline-primary tutor-btn-sm">
-											<?php _e("Details", "tutor-pro"); ?>
+											<?php esc_html_e( 'Details', 'tutor-pro' ); ?>
 										</a>
 										<a href="<?php echo esc_url( get_permalink( $course->course_id ) ); ?>" class="tutor-iconic-btn" target="_blank">
 											<span class="tutor-icon-external-link"></span>
@@ -105,7 +100,7 @@ $courses = new Course_List();
 		/**
 		 * Prepare pagination data & load template
 		 */
-		if($the_query->found_posts > $limit) {
+		if ( $the_query->found_posts > $limit ) {
 			$pagination_data     = array(
 				'total_items' => $the_query->found_posts,
 				'per_page'    => $limit,

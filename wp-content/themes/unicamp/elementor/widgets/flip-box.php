@@ -3,7 +3,7 @@
 namespace Unicamp_Elementor;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
@@ -645,7 +645,9 @@ class Widget_Flip_Box extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'title_a',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .front-side .heading',
 		] );
 
@@ -682,7 +684,9 @@ class Widget_Flip_Box extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'description_a',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_TEXT,
+			],
 			'selector' => '{{WRAPPER}} .front-side .description',
 		] );
 
@@ -915,7 +919,9 @@ class Widget_Flip_Box extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'title_b',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .back-side .heading',
 		] );
 
@@ -952,7 +958,9 @@ class Widget_Flip_Box extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'description_b',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_TEXT,
+			],
 			'selector' => '{{WRAPPER}} .back-side .description',
 		] );
 

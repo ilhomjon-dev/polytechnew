@@ -399,7 +399,7 @@ if ( ( defined( 'INSIGHT_CORE_SHOW_EXPORT_PAGE' ) && true === INSIGHT_CORE_SHOW_
 		function export_tutor_settings() {
 			$options = array(
 				'tutor_option',
-				'tutor_addons_config',
+				//'tutor_addons_config',
 				'tutor_withdraw_options',
 			);
 

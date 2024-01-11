@@ -180,8 +180,8 @@ class Widget_Blog extends Posts_Base {
 		$banner_repeater = new Repeater();
 
 		$document_types = Plugin::$instance->documents->get_document_types( [
-			'show_in_library' => true,
-		] );
+			                                                                    'show_in_library' => true,
+		                                                                    ] );
 
 		$banner_repeater->add_control( 'template_id', [
 			'label'        => esc_html__( 'Choose Template', 'unicamp' ),
@@ -402,14 +402,15 @@ class Widget_Blog extends Posts_Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 3,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 3,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [

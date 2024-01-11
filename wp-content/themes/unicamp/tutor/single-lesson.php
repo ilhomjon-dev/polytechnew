@@ -36,7 +36,9 @@ $currentPost = $post;
 			</div>
 			<div id="tutor-single-entry-content"
 			     class="tutor-lesson-content tutor-single-entry-content tutor-single-entry-content-<?php the_ID(); ?>">
-				<?php tutor_lesson_content(); ?>
+				<div class="container">
+					<?php tutor_lesson_content(); ?>
+				</div>
 			</div>
 		</div>
 

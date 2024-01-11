@@ -59,6 +59,12 @@ $filters = array(
 	'course_filter' => true,
 );
 
+if ( 'cancelled' === $active_tab ) {
+	$filters['bulk_actions'][] = array(
+		'value'  => 'delete',
+		'option' => __( 'Delete Permanently', 'tutor-pro' ),
+	);
+}
 ?>
 <div class="tutor-admin-wrap">
 	<?php

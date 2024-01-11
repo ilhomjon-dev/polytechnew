@@ -3,19 +3,19 @@
 Plugin Name: Insight Swatches
 Description: WooCommerce Variation Swatches by ThemeMove
 Author: ThemeMove
-Version: 1.6.0
+Version: 1.7.0
 Author URI: https://thememove.com
 Text Domain: insight-swatches
 Domain Path: /languages/
 Requires at least: 5.7
 Requires PHP: 7.0
 WC requires at least: 3.0
-WC tested up to: 6.3.0
+WC tested up to: 8.1
 */
 
 defined( 'ABSPATH' ) || exit;
 
-! defined( 'INSIGHT_SWATCHES_VERSION' ) && define( 'INSIGHT_SWATCHES_VERSION', '1.6.0' );
+! defined( 'INSIGHT_SWATCHES_VERSION' ) && define( 'INSIGHT_SWATCHES_VERSION', '1.7.0' );
 ! defined( 'INSIGHT_SWATCHES_URL' ) && define( 'INSIGHT_SWATCHES_URL', plugin_dir_url( __FILE__ ) );
 ! defined( 'INSIGHT_SWATCHES_PATH' ) && define( 'INSIGHT_SWATCHES_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -29,10 +29,18 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 
 			add_action( 'init', [ $this, 'init' ] );
 			add_action( 'woocommerce_variable_add_to_cart', [ $this, 'variable_scripts' ] );
+
+			add_action( 'before_woocommerce_init', [ $this, 'declare_compatibility_features' ] );
 		}
 
 		public function load_text_domain() {
 			load_plugin_textdomain( 'insight-swatches', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+		}
+
+		public function declare_compatibility_features() {
+			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			}
 		}
 
 		public function init() {
@@ -106,10 +114,6 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 			}
 		}
 
-		function field_on_create( $taxonomy ) {
-			var_dump( $taxonomy );
-		}
-
 		function show_field( $term_or_tax ) {
 			if ( is_object( $term_or_tax ) ) {
 				//is term
@@ -149,17 +153,13 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 						$image = wc_placeholder_img_src();
 					}
 					echo $wrap_start . 'SW Image' . $wrap_mid; ?>
-					<div id="sw_image_thumbnail" style="float: left; margin-right: 10px;"><img
-							src="<?php echo esc_url( $image ); ?>" width="60px" height="60px"/></div>
+					<div id="sw_image_thumbnail" style="float: left; margin-right: 10px;">
+						<img src="<?php echo esc_url( $image ); ?>" width="60px" height="60px"/>
+					</div>
 					<div style="line-height: 60px;">
-						<input type="hidden" id="sw_image" name="sw_image"
-						       value="<?php echo esc_attr( $sw_val ); ?>"/>
-						<button id="sw_upload_image" type="button"
-						        class="sw_upload_image button"><?php esc_html_e( 'Upload/Add image', 'insight-swatches' ); ?>
-						</button>
-						<button id="sw_remove_image" type="button"
-						        class="sw_remove_image button"><?php esc_html_e( 'Remove image', 'insight-swatches' ); ?>
-						</button>
+						<input type="hidden" id="sw_image" name="sw_image" value="<?php echo esc_attr( $sw_val ); ?>"/>
+						<button id="sw_upload_image" type="button" class="sw_upload_image button"><?php esc_html_e( 'Upload/Add image', 'insight-swatches' ); ?></button>
+						<button id="sw_remove_image" type="button" class="sw_remove_image button"><?php esc_html_e( 'Remove image', 'insight-swatches' ); ?></button>
 					</div>
 					<?php
 					echo $wrap_end;
@@ -174,12 +174,15 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 			if ( isset( $_POST['sw_color'] ) ) {
 				update_term_meta( $term_id, 'sw_color', sanitize_text_field( $_POST['sw_color'] ) );
 			}
+
 			if ( isset( $_POST['sw_text'] ) ) {
 				update_term_meta( $term_id, 'sw_text', sanitize_text_field( $_POST['sw_text'] ) );
 			}
+
 			if ( isset( $_POST['sw_image'] ) ) {
 				update_term_meta( $term_id, 'sw_image', sanitize_text_field( $_POST['sw_image'] ) );
 			}
+
 			if ( isset( $_POST['sw_tooltip'] ) ) {
 				update_term_meta( $term_id, 'sw_tooltip', sanitize_text_field( $_POST['sw_tooltip'] ) );
 			}
@@ -258,7 +261,7 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 
 		public function swatches_single() {
 			/**
-			 * @var WC_Product $product
+			 * @var WC_Product|WC_Product_Variable $product
 			 */
 			global $product;
 
@@ -281,8 +284,12 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 			}
 		}
 
-		function shortcode_single() {
+		public function shortcode_single() {
+			/**
+			 * @var WC_Product|WC_Product_Variable $product
+			 */
 			global $product;
+
 			if ( $product->is_type( 'variable' ) ) {
 				$attributes           = $product->get_attributes();
 				$available_variations = $product->get_available_variations();
@@ -294,14 +301,17 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 					'variation_attributes' => $variation_attributes,
 					'selected_attributes'  => $selected_attributes,
 				);
-				$template             = Insight_Swatches_Utils::get_template( 'swatches-single.php', $args, true );
 
-				return $template;
+				return Insight_Swatches_Utils::get_template( 'swatches-single.php', $args, true );
 			}
 		}
 
 		public function swatches_loop() {
+			/**
+			 * @var WC_Product|WC_Product_Variable $product
+			 */
 			global $product;
+
 			if ( $product->is_type( 'variable' ) ) {
 				$attributes           = $product->get_attributes();
 				$available_variations = $product->get_available_variations();
@@ -318,8 +328,12 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 			}
 		}
 
-		function shortcode_loop() {
+		public function shortcode_loop() {
+			/**
+			 * @var WC_Product|WC_Product_Variable $product
+			 */
 			global $product;
+
 			if ( $product->is_type( 'variable' ) ) {
 				$attributes           = $product->get_attributes();
 				$available_variations = $product->get_available_variations();
@@ -331,9 +345,8 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 					'variation_attributes' => $variation_attributes,
 					'selected_attributes'  => $selected_attributes,
 				);
-				$template             = Insight_Swatches_Utils::get_template( 'swatches-loop.php', $args, true );
 
-				return $template;
+				return Insight_Swatches_Utils::get_template( 'swatches-loop.php', $args, true );
 			}
 		}
 
@@ -379,14 +392,14 @@ if ( ! class_exists( 'Insight_Swatches' ) ) {
 			}
 		}
 
-		function custom_columns( $columns ) {
+		public function custom_columns( $columns ) {
 			$columns['sw_value']   = 'SW Value';
 			$columns['sw_tooltip'] = 'SW Tooltip';
 
 			return $columns;
 		}
 
-		function custom_columns_content( $columns, $column, $term_id ) {
+		public function custom_columns_content( $columns, $column, $term_id ) {
 			if ( $column === 'sw_value' ) {
 				$term      = get_term( $term_id );
 				$attr_id   = wc_attribute_taxonomy_id_by_name( $term->taxonomy );

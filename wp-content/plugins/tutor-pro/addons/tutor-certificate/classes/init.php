@@ -32,34 +32,40 @@ class init {
 
 		new Instructor_Signature();
 
-		add_filter( 'tutor_pages', function( array $pages ) {
-			return $pages + array( 'tutor_certificate_page'   => __( 'Tutor Certificate', 'tutor' ) );
-		});
-
-		add_action( 'init', function() {
-			if ( ! wp_doing_ajax() ) {
-				$this->generate_tutor_certificate_page();
+		add_filter(
+			'tutor_pages',
+			function( array $pages ) {
+				return $pages + array( 'tutor_certificate_page' => __( 'Tutor Certificate', 'tutor' ) );
 			}
-		});
+		);
+
+		add_action(
+			'init',
+			function() {
+				if ( ! wp_doing_ajax() ) {
+					$this->generate_tutor_certificate_page();
+				}
+			}
+		);
 	}
 
 	/**
 	 * Create certificate page & update page ID to tutor option.
 	 *
 	 * @since 2.1.7
-	 * 
+	 *
 	 * @return void
 	 */
 	private function generate_tutor_certificate_page() {
 		$certificate_page_id = (int) tutor_utils()->get_option( 'tutor_certificate_page' );
-		if ( in_array( $certificate_page_id, array( 0, -1 ) )  ) {
+		if ( in_array( $certificate_page_id, array( 0, -1 ) ) ) {
 			$post_details = array(
 				'post_title'   => __( 'Tutor Certificate', 'tutor' ),
 				'post_content' => '',
 				'post_status'  => 'publish',
-				'post_type'    => 'page'
+				'post_type'    => 'page',
 			);
-			$page_id = wp_insert_post( $post_details );
+			$page_id      = wp_insert_post( $post_details );
 			update_tutor_option( 'tutor_certificate_page', $page_id );
 		}
 	}
@@ -115,7 +121,7 @@ class init {
 	}
 
 	public function add_options( $attr ) {
-		$pages = tutor_utils()->get_pages();
+		$pages                     = tutor_utils()->get_pages();
 		$attr['tutor_certificate'] = array(
 			'label'    => __( 'Certificate', 'tutor-pro' ),
 			'slug'     => 'tutor_certificate',
@@ -124,26 +130,28 @@ class init {
 			'icon'     => 'tutor-icon-certificate-landscape',
 			'blocks'   => array(
 				array(
-					'label'      => __( 'Certificate Settings', 'tutor-pro' ),
-					'slug'       => 'certificate_settings',
-					'segments'	 => array(
+					'label'    => __( 'Certificate Settings', 'tutor-pro' ),
+					'slug'     => 'certificate_settings',
+					'segments' => array(
 						array(
 							'label'      => __( 'Legacy Certificate Settings', 'tutor-pro' ),
 							'block_type' => 'uniform',
 							'fields'     => array(
 								array(
-									'key'     => 'tutor_cert_authorised_name',
-									'type'    => 'text',
-									'default' => __( 'Authorised Name', 'tutor-pro' ),
-									'label'   => __( 'Authorised Name', 'tutor-pro' ),
-									'desc'    => __( 'Authorised name will be printed under signature.', 'tutor-pro' ),
+									'key'         => 'tutor_cert_authorised_name',
+									'type'        => 'text',
+									'default'     => __( 'Authorised Name', 'tutor-pro' ),
+									'label'       => __( 'Authorised Name', 'tutor-pro' ),
+									'desc'        => __( 'Authorised name will be printed under signature.', 'tutor-pro' ),
+									'placeholder' => __( 'Enter authorised name', 'tutor-pro' ),
 								),
 								array(
-									'key'     => 'tutor_cert_authorised_company_name',
-									'type'    => 'text',
-									'default' => __( 'Company Name', 'tutor-pro' ),
-									'label'   => __( 'Authorised Company Name', 'tutor-pro' ),
-									'desc'    => __( 'Authorised company name will be printed under authorised name.', 'tutor-pro' ),
+									'key'         => 'tutor_cert_authorised_company_name',
+									'type'        => 'text',
+									'default'     => __( 'Company Name', 'tutor-pro' ),
+									'label'       => __( 'Authorised Company Name', 'tutor-pro' ),
+									'desc'        => __( 'Authorised company name will be printed under authorised name.', 'tutor-pro' ),
+									'placeholder' => __( 'Enter authorised company name', 'tutor-pro' ),
 								),
 								array(
 									'key'     => 'tutor_certificate_page',
@@ -177,10 +185,58 @@ class init {
 									'desc'    => __( 'Upload a signature that will be printed at certificate', 'tutor-pro' ),
 								),
 							),
-						)
-					)
+						),
+					),
 				),
 			),
+		);
+
+		/**
+		 * Certificate Showcase Options
+		 *
+		 * @since 2.2.3
+		 */
+		$certificate_showcase_options = array(
+			array(
+				'key'           => 'enable_certificate_showcase',
+				'type'          => 'toggle_switch',
+				'label'         => __( 'Showcase Certificate', 'tutor-pro' ),
+				'default'       => 'off',
+				'desc'          => __( 'Enable to show certificate on course details', 'tutor-pro' ),
+				'toggle_fields' => 'certificate_showcase_title,certificate_showcase_desc',
+			),
+			array(
+				'key'         => 'certificate_showcase_title',
+				'type'        => 'text',
+				'label'       => __( 'Title', 'tutor-pro' ),
+				'placeholder' => __( 'Insert your title here', 'tutor-pro' ),
+				'desc'        => __( 'Enter a title for the certificate showcase section.', 'tutor-pro' ),
+				'default'     => __( 'Earn a certificate', 'tutor-pro' ),
+				'maxlength'   => 45,
+			),
+			array(
+				'key'         => 'certificate_showcase_desc',
+				'type'        => 'textarea',
+				'label'       => __( 'Description', 'tutor-pro' ),
+				'placeholder' => __( 'Insert your description here', 'tutor-pro' ),
+				'desc'        => __( 'Enter a description for the certificate showcase section.', 'tutor-pro' ),
+				'maxlength'   => 110,
+				'rows'        => 4,
+				'default'     => __( 'Add this certificate to your resume to demonstrate your skills & increase your chances of getting noticed.', 'tutor-pro' ),
+			),
+		);
+
+		array_splice(
+			$attr['design']['blocks'],
+			3,
+			0,
+			array(
+				array(
+					'slug'       => 'certificate-showcase',
+					'block_type' => 'uniform',
+					'fields'     => $certificate_showcase_options,
+				),
+			)
 		);
 
 		return $attr;

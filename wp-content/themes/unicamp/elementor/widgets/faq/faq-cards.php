@@ -68,14 +68,15 @@ class Widget_FAQ_Cards extends Posts_Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 4,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 4,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -118,7 +119,7 @@ class Widget_FAQ_Cards extends Posts_Base {
 					<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 						<?php
 						$item_key = "item_{$loop_count}";
-						$loop_count++;
+						$loop_count ++;
 						$box_key = $item_key . 'box';
 
 						$link = get_the_permalink();

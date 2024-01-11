@@ -43,11 +43,11 @@ $email_hint = Utils::get_email_hint( $opt_data->user->user_email );
 						autofocus
 						placeholder="<?php esc_html_e( 'Enter OTP', 'tutor-pro' ); ?>">
 
-				<button type="submit" class="tutor-btn tutor-btn-primary tutor-ml-8"><?php echo esc_html( 'Submit' ); ?></button>
+				<button type="submit" class="tutor-btn tutor-btn-primary tutor-ml-8"><?php echo esc_html__( 'Submit', 'tutor-pro' ); ?></button>
 			</div>
 			<div class="tutor-mt-8">
 				<a class="tutor-btn-rent-otp" href="#"><?php echo esc_html__( 'Resend e-mail', 'tutor-pro' ); ?></a>
-				<div class="tutor-couter-div tutor-color-muted"><?php echo esc_html__( 'Resend e-mail after' ); ?> <span class="tutor-resent-counter"></span> sec.</div>
+				<div class="tutor-couter-div tutor-color-muted"><?php echo esc_html__( 'Resend e-mail after', 'tutor-pro' ); ?> <span class="tutor-resent-counter"></span> sec.</div>
 			</div>
 			<input type="hidden" id="ajax_url" value="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
 		</form>

@@ -37,6 +37,7 @@ class BundleArchive {
 	 * @return void
 	 */
 	public function __construct() {
+		add_filter( 'tutor_course_archive_post_types', array( $this, 'add_post_types' ) );
 		add_action( 'tutor_before_course_category_filter', array( $this, 'extend_course_filter' ) );
 		add_filter( 'tutor_course_filter_args', array( $this, 'course_filter_args' ) );
 		add_filter( 'tutor_course_thumbnail_placeholder', array( $this, 'bundle_thumbnail_placeholder' ), 10, 2 );
@@ -44,6 +45,20 @@ class BundleArchive {
 		add_filter( 'tutor_show_course_ratings', array( $this, 'show_course_ratings' ), 10, 2 );
 		add_filter( 'tutor_course_students', array( $this, 'bundle_students' ), 10, 2 );
 		add_filter( 'tutor_course/loop/start/button', array( $this, 'loop_start_button' ), 10, 2 );
+	}
+
+	/**
+	 * Add post types for course archive.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param array $post_types post types.
+	 *
+	 * @return array
+	 */
+	public function add_post_types( $post_types ) {
+		$post_types[] = CourseBundle::POST_TYPE;
+		return $post_types;
 	}
 
 	/**

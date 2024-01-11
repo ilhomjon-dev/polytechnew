@@ -38,9 +38,10 @@ if ( in_array( $style, [ 'list', 'list-02' ] ) ) {
 		'popupClass' => 'course-quick-view-popup',
 	];
 } else {
-	$lg_columns = Unicamp::setting( 'course_archive_lg_columns', 4 );
-	$md_columns = 2;
-	$sm_columns = 1;
+	$lg_columns = intval( Unicamp::setting( 'course_archive_lg_columns', 4 ) );
+	$md_columns = Unicamp::setting( 'course_archive_md_columns', 2 );
+	$sm_columns = Unicamp::setting( 'course_archive_sm_columns', 1 );
+
 
 	if ( 'none' !== Unicamp_Global::instance()->get_sidebar_status() ) {
 		$lg_columns--;

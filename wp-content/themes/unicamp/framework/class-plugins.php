@@ -32,14 +32,14 @@ if ( ! class_exists( 'Unicamp_Register_Plugins' ) ) {
 				array(
 					'name'     => esc_html__( 'Insight Core', 'unicamp' ),
 					'slug'     => 'insight-core',
-					'source'   => 'https://www.dropbox.com/s/u4o8qjg3pzk26xz/insight-core-2.6.4.zip?dl=1',
-					'version'  => '2.6.4',
+					'source'   => 'https://www.dropbox.com/scl/fi/u6dujwpy2eudi38tbircs/insight-core-2.6.6.zip?rlkey=h79eo9bjn27tfj0c18wvhr6ky&dl=1',
+					'version'  => '2.6.6',
 					'required' => true,
 				),
 				array(
 					'name'     => esc_html__( 'Unicamp Addons', 'unicamp' ),
 					'slug'     => 'unicamp-addons',
-					'source'   => $this->get_plugin_google_driver_url( '1dE4m4rG9JSN5nMWAdo79R_F73ZtQ30ug' ),
+					'source'   => 'https://www.dropbox.com/scl/fi/1vv7e7u5tk1u6x8yfcwxx/unicamp-addons-1.1.0.zip?rlkey=7z1sxbiza9sv53zixiqrr4u10&dl=1',
 					'version'  => '1.1.0',
 					'required' => true,
 				),
@@ -49,17 +49,18 @@ if ( ! class_exists( 'Unicamp_Register_Plugins' ) ) {
 					'required' => true,
 				),
 				array(
-					'name'     => esc_html__( 'Elementor Pro', 'unicamp' ),
-					'slug'     => 'elementor-pro',
-					'source'   => 'https://www.dropbox.com/s/vnb9c4tx8qs3kva/elementor-pro-3.12.3.zip?dl=1',
-					'version'  => '3.12.3',
-					'required' => true,
+					'name'        => esc_html__( 'ThemeMove Addons For Elementor', 'unicamp' ),
+					'description' => 'Additional functions for Elementor',
+					'slug'        => 'tm-addons-for-elementor',
+					'logo'        => 'insight',
+					'source'      => 'https://www.dropbox.com/scl/fi/giyeenvi0z8rafck3pc8q/tm-addons-for-elementor-1.3.1.zip?rlkey=vpzbqvgvzr6sm2gspxpqbg6jf&dl=1',
+					'version'     => '1.3.1',
 				),
 				array(
 					'name'    => esc_html__( 'Revolution Slider', 'unicamp' ),
 					'slug'    => 'revslider',
-					'source'  => 'https://www.dropbox.com/s/citq4q974z0069m/revslider-6.6.14.zip?dl=1',
-					'version' => '6.6.14',
+					'source'  => 'https://www.dropbox.com/scl/fi/uyekrlrwwvydbmtqybbav/revslider-6.6.19.zip?rlkey=12bxsmmso64lorf0dua9eimwx&dl=1',
+					'version' => '6.6.19',
 				),
 				array(
 					'name' => esc_html__( 'WP Events Manager', 'unicamp' ),
@@ -92,8 +93,8 @@ if ( ! class_exists( 'Unicamp_Register_Plugins' ) ) {
 				array(
 					'name'    => esc_html__( 'Insight Swatches', 'unicamp' ),
 					'slug'    => 'insight-swatches',
-					'source'  => 'https://www.dropbox.com/s/rgobp5b4y4dm6v7/insight-swatches-1.6.0.zip?dl=1',
-					'version' => '1.6.0',
+					'source'  => 'https://www.dropbox.com/scl/fi/j2po0jzzlb8zs4b5t7zu4/insight-swatches-1.7.0.zip?rlkey=1st3r1s1w3w43fbyrek90df75&dl=1',
+					'version' => '1.7.0',
 				),
 				array(
 					'name' => esc_html__( 'WP-PostViews', 'unicamp' ),
@@ -120,8 +121,8 @@ if ( ! class_exists( 'Unicamp_Register_Plugins' ) ) {
 				array(
 					'name'    => esc_html__( 'Tutor LMS Pro', 'unicamp' ),
 					'slug'    => 'tutor-pro',
-					'source'  => 'https://www.dropbox.com/scl/fi/w29twc5oetdb4npfyobea/tutor-pro-2.2.2.zip?rlkey=cr884vt7pdpox02n5zth3jn7w&dl=1',
-					'version' => '2.2.2',
+					'source'  => 'https://www.dropbox.com/scl/fi/w77wt829kcg10lhex5mwd/tutor-pro-2.5.0.zip?rlkey=o5lsy1952mo0eqr35nvuz9gln&dl=1',
+					'version' => '2.5.0',
 				),
 				array(
 					'name' => esc_html__( 'Tutor LMS', 'unicamp' ),

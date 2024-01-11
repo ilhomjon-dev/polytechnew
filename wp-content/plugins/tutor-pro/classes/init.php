@@ -1,4 +1,13 @@
 <?php
+/**
+ * Init Tutor Pro
+ *
+ * @package TutorPro
+ * @author Themeum <support@themeum.com>
+ * @link https://themeum.com
+ * @since 1.0.0
+ */
+
 namespace TUTOR_PRO;
 
 use TutorPro\GoogleMeet\GoogleMeet;
@@ -7,7 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class init {
+/**
+ * Init Class
+ *
+ * @since 1.0.0
+ */
+class Init {
+	//phpcs:disable Squiz.Commenting.VariableComment.Missing
 	public $version = TUTOR_PRO_VERSION;
 	public $path;
 	public $url;
@@ -23,10 +38,13 @@ class init {
 
 	private $email_verification;
 	private $device_management;
+	private $instructor;
+	//phpcs:enable Squiz.Commenting.VariableComment.Missing
 
-	// Components
-
-	function __construct() {
+	/**
+	 * Register hooks.
+	 */
+	public function __construct() {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -58,6 +76,11 @@ class init {
 		}
 	}
 
+	/**
+	 * Load constructors assets.
+	 *
+	 * @return void
+	 */
 	public function load_constructors_asset() {
 		/**
 		 * Loading Autoloader
@@ -79,10 +102,12 @@ class init {
 		$this->enrollment_expiry     = new Enrollment_Expiry();
 		$this->dashboard             = new Dashboard();
 		$this->shortcode             = new Shortcode();
+		$this->instructor            = new Instructor();
 		$this->device_management     = new DeviceManagement();
 		$this->email_verification    = new EmailVerification();
 
 		new Filters();
+		new ContentSecurity();
 
 		$this->load_addons();
 
@@ -109,20 +134,22 @@ class init {
 	}
 
 	/**
-	 * @param $className
+	 * Auto-Load class and the files
 	 *
-	 * Auto Load class and the files
+	 * @param string $class_name class name.
+	 *
+	 * @return void
 	 */
-	private function loader( $className ) {
-		if ( ! class_exists( $className ) ) {
-			$className = preg_replace(
+	private function loader( $class_name ) {
+		if ( ! class_exists( $class_name ) ) {
+			$class_name = preg_replace(
 				array( '/([a-z])([A-Z])/', '/\\\/' ),
 				array( '$1$2', DIRECTORY_SEPARATOR ),
-				$className
+				$class_name
 			);
 
-			$className = str_replace( 'TUTOR_PRO' . DIRECTORY_SEPARATOR, 'classes' . DIRECTORY_SEPARATOR, $className );
-			$file_name = $this->path . $className . '.php';
+			$class_name = str_replace( 'TUTOR_PRO' . DIRECTORY_SEPARATOR, 'classes' . DIRECTORY_SEPARATOR, $class_name );
+			$file_name = $this->path . $class_name . '.php';
 
 			if ( file_exists( $file_name ) && is_readable( $file_name ) ) {
 				require_once $file_name;
@@ -130,7 +157,11 @@ class init {
 		}
 	}
 
-	// Run the TUTOR right now
+	/**
+	 * Run the plugin.
+	 *
+	 * @return void
+	 */
 	public function run() {
 		do_action( 'tutor_pro_before_run' );
 
@@ -144,7 +175,7 @@ class init {
 	 */
 	public function tutor_pro_activate() {
 		$version = get_option( 'tutor_pro_version' );
-		// Save Option
+		// Save Option.
 		if ( ! $version ) {
 			update_option( 'tutor_pro_version', TUTOR_PRO_VERSION );
 		}
@@ -166,7 +197,7 @@ class init {
 		if ( $migrated || ! $old_model || ! tutor_utils()->has_pmpro() ) {
 			// Already migrated
 			// or old one not saved yet
-			// PM pro not available
+			// PM pro not available.
 			return;
 		}
 
@@ -182,15 +213,25 @@ class init {
 	}
 
 
+	/**
+	 * Includes helper files.
+	 *
+	 * @return void
+	 */
 	public function includes() {
 		include tutor_pro()->path . 'includes/functions.php';
 	}
 
+	/**
+	 * Load addons
+	 *
+	 * @return void
+	 */
 	public function load_addons() {
 
-		$addonsDir = array_filter( glob( tutor_pro()->path . 'addons' . DIRECTORY_SEPARATOR . '*' ), 'is_dir' );
-		if ( count( $addonsDir ) > 0 ) {
-			foreach ( $addonsDir as $key => $value ) {
+		$addons_dir = array_filter( glob( tutor_pro()->path . 'addons' . DIRECTORY_SEPARATOR . '*' ), 'is_dir' );
+		if ( count( $addons_dir ) > 0 ) {
+			foreach ( $addons_dir as $key => $value ) {
 				$addon_dir_name = str_replace( dirname( $value ) . DIRECTORY_SEPARATOR, '', $value );
 				$file_name      = tutor_pro()->path . 'addons' . DIRECTORY_SEPARATOR . $addon_dir_name . DIRECTORY_SEPARATOR . $addon_dir_name . '.php';
 				if ( file_exists( $file_name ) ) {

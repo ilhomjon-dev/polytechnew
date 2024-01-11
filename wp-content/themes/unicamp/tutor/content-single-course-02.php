@@ -17,6 +17,10 @@
 defined( 'ABSPATH' ) || exit;
 
 global $unicamp_course;
+
+$is_administrator      = current_user_can( 'administrator' );
+$is_instructor         = tutor_utils()->is_instructor_of_this_course();
+$course_content_access = (bool) get_tutor_option( 'course_content_access_for_ia' );
 ?>
 
 <div class="page-content">
@@ -42,20 +46,21 @@ global $unicamp_course;
 						<?php tutor_course_lead_info(); ?>
 
 						<div class="tutor-course-form-actions">
-							<?php
-							$is_administrator      = current_user_can( 'administrator' );
-							$is_instructor         = tutor_utils()->is_instructor_of_this_course();
-							$course_content_access = (bool) get_tutor_option( 'course_content_access_for_ia' );
+							<?php do_action( 'tutor_course/single/actions_btn_group/before' ); ?>
 
-							if ( $unicamp_course->is_enrolled() ) :
-								tutor_load_template( 'single.course.custom.enrolled-action-buttons' );
-							elseif ( $course_content_access && ( $is_administrator || $is_instructor ) ) :
-								tutor_load_template( 'single.course.custom.continue-lesson-button' );
-							else:
-								tutor_single_course_add_to_cart();
-								tutor_load_template( 'custom.wishlist-button-02' );
-							endif;
-							?>
+							<?php if ( $unicamp_course->is_enrolled() ) : ?>
+								<?php tutor_load_template( 'single.course.custom.enrolled-action-buttons' ); ?>
+							<?php elseif ( $course_content_access && ( $is_administrator || $is_instructor ) ) : ?>
+								<?php tutor_load_template( 'single.course.custom.continue-lesson-button' ); ?>
+
+								<?php tutor_load_template( 'custom.wishlist-button-02' ); ?>
+							<?php else: ?>
+								<?php Unicamp_Tutor::instance()->single_course_add_to_cart(); ?>
+
+								<?php tutor_load_template( 'custom.wishlist-button-02' ); ?>
+							<?php endif; ?>
+
+							<?php do_action( 'tutor_course/single/actions_btn_group/after' ); ?>
 						</div>
 					</div>
 				</div>
@@ -93,7 +98,7 @@ global $unicamp_course;
 							<?php if ( $unicamp_course->is_viewable() ) : ?>
 								<div id="tutor-course-tab-resources"
 								     class="single-course-tab single-course-tab-resources">
-									<?php get_tutor_posts_attachments(); ?>
+									<?php Unicamp_Tutor::instance()->single_course_attachment_html(); ?>
 								</div>
 
 								<div id="tutor-course-tab-question-and-answer"
@@ -121,11 +126,13 @@ global $unicamp_course;
 								</div>
 							<?php endif; ?>
 
-							<?php if ( $unicamp_course->is_viewable() ) : ?>
-								<div id="tutor-course-tab-gradebook"
-								     class="single-course-tab single-course-tab-gradebook">
-									<?php do_action( 'tutor_course/single/enrolled/gradebook', get_the_ID() ); ?>
-								</div>
+							<?php if ( $unicamp_course->is_viewable() ): ?>
+								<?php if ( class_exists( '\TUTOR_GB\GradeBook' ) ) { ?>
+									<div id="tutor-course-tab-gradebook"
+									     class="single-course-tab single-course-tab-gradebook">
+										<?php Unicamp_Tutor::instance()->get_grade_book_template(); ?>
+									</div>
+								<?php } ?>
 							<?php endif; ?>
 
 							<div id="tutor-course-tab-reviews" class="single-course-tab single-course-tab-reviews">
@@ -141,7 +148,7 @@ global $unicamp_course;
 
 							<?php do_action( 'tutor_course/single/before/sidebar' ); ?>
 
-							<?php Unicamp_Tutor::instance()->course_enroll_box(); ?>
+							<?php tutor_load_template( 'single.course.course-entry-box' ); ?>
 
 							<?php do_action( 'tutor_course/single/after/sidebar' ); ?>
 

@@ -10,6 +10,7 @@
  * @package       Unicamp/TutorLMS/Templates
  * @theme-since   1.0.0
  * @theme-version 2.0.0
+ * @theme-deprecated 2.2.5
  */
 
 defined( 'ABSPATH' ) || exit;

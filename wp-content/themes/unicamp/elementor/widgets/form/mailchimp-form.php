@@ -3,7 +3,6 @@
 namespace Unicamp_Elementor;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color;
 
 defined( 'ABSPATH' ) || exit;
 

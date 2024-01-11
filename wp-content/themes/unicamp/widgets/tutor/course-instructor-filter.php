@@ -64,7 +64,7 @@ if ( ! class_exists( 'Unicamp_WP_Widget_Course_Instructor_Filter' ) ) {
 			$class .= ' show-display-' . $display_type;
 			$class .= ' show-items-count-' . $items_count;
 
-			$instructors = tutor_utils()->get_instructors( 0, PHP_INT_MAX, '', 'approved' );
+			$instructors = tutor_utils()->get_instructors( 0, PHP_INT_MAX, '', '', '', '', 'approved' );
 
 			$filter_name    = 'instructor';
 			$base_link      = Unicamp_Tutor::instance()->get_course_listing_page_url();

@@ -58,7 +58,7 @@
 							<td>
 								<div class="tutor-d-flex tutor-align-center tutor-justify-end tutor-gap-2">
 									<div class="tutor-form-select-with-icon <?php echo $available_status[$review->comment_status][1]; ?>">
-										<select title="<?php esc_attr_e( 'Update course status', 'tutor' ); ?>" class="tutor-table-row-status-update" data-id="<?php echo esc_attr( $review->comment_ID ); ?>" data-status="<?php echo esc_attr( $review->comment_status ); ?>" data-status_key="status" data-action="tutor_change_review_status">
+										<select title="<?php esc_attr_e( 'Update review status', 'tutor-pro' ); ?>" class="tutor-table-row-status-update" data-id="<?php echo esc_attr( $review->comment_ID ); ?>" data-status="<?php echo esc_attr( $review->comment_status ); ?>" data-status_key="status" data-action="tutor_change_review_status">
 											<?php foreach ( $available_status as $key => $value ) : ?>
 												<option data-status_class="<?php echo esc_attr( $value[1] ); ?>" value="<?php echo $key; ?>" <?php selected( $key, $review->comment_status, 'selected' ); ?>>
 													<?php echo esc_html( $value[0] ); ?>

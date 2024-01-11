@@ -146,7 +146,7 @@ class EmailVerification {
 	 * Add email sent fail error.
 	 *
 	 * @since 2.1.9
-	 * 
+	 *
 	 * @param array $errors errors.
 	 * @return array
 	 */
@@ -222,6 +222,8 @@ class EmailVerification {
 			if ( is_a( $userdata, 'WP_User' ) ) {
 				$existing_token = get_user_meta( $userdata->ID, self::VERIFICATION_TOKEN_META_KEY, true );
 				if ( $token === $existing_token ) {
+
+					do_action( 'tutor_after_student_signup', $userdata->ID );
 
 					update_user_meta( $userdata->ID, self::VERIFICATION_REQ_META_KEY, self::VERIFIED_IDENTIFIER );
 

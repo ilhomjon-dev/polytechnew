@@ -176,4 +176,5 @@ $course_id = get_the_ID();
 	</div>
 <?php } ?>
 
-<?php do_action( 'tutor_course/single/after/topics' ); ?>
+<?php do_action( 'tutor_course/single/after/topics', $course_id ); ?>
+

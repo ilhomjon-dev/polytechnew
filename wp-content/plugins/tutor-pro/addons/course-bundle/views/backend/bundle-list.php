@@ -69,7 +69,7 @@ $args = array(
 );
 
 if ( 'all' === $active_tab || 'mine' === $active_tab ) {
-	$args['post_status'] = array( 'publish', 'pending', 'draft', 'private' );
+	$args['post_status'] = array( 'publish', 'pending', 'draft', 'private', 'future' );
 } else {
 	$status              = 'published' === $active_tab ? 'publish' : $active_tab;
 	$args['post_status'] = array( $status );
@@ -132,6 +132,10 @@ $available_status = array(
 	'private' => array( __( 'Private', 'tutor-pro' ), 'select-default' ),
 );
 
+$future_list = array(
+	'publish' => array( __( 'Publish', 'tutor-pro' ), 'select-success' ),
+	'future'  => array( __( 'Schedule', 'tutor-pro' ), 'select-default' ),
+);
 ?>
 
 <div class="tutor-admin-wrap">
@@ -298,11 +302,20 @@ $available_status = array(
 										<div class="tutor-d-flex tutor-align-center tutor-justify-end tutor-gap-2">
 											<div class="tutor-form-select-with-icon <?php echo esc_attr( $status ); ?>">
 												<select title="<?php esc_attr_e( 'Update bundle status', 'tutor-pro' ); ?>" class="tutor-table-row-status-update" data-id="<?php echo esc_attr( $post->ID ); ?>" data-status="<?php echo esc_attr( $post->post_status ); ?>" data-status_key="status" data-action="tutor_change_bundle_status">
-													<?php foreach ( $available_status as $key => $value ) : ?>
-														<option data-status_class="<?php echo esc_attr( $value[1] ); ?>" value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $post->post_status, 'selected' ); ?>>
-															<?php echo esc_html( $value[0] ); ?>
-														</option>
-													<?php endforeach; ?>
+													<?php
+													$status_list = $available_status;
+													if ( 'future' === $post->post_status ) {
+														$status_list = $future_list;
+													}
+
+													foreach ( $status_list as $key => $value ) :
+														?>
+													<option data-status_class="<?php echo esc_attr( $value[1] ); ?>" value="<?php echo esc_attr( $key ); ?>" <?php selected( $key, $post->post_status, 'selected' ); ?>>
+														<?php echo esc_html( $value[0] ); ?>
+													</option>
+														<?php
+													endforeach;
+													?>
 												</select>
 												<i class="icon1 tutor-icon-eye-bold"></i>
 												<i class="icon2 tutor-icon-angle-down"></i>

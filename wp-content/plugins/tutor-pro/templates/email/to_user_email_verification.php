@@ -1,13 +1,15 @@
 <?php
-
 /**
- * @package TUTOR_LMS_PRO/EmailTemplates
+ * E-mail template for user's email verification.
  *
- * @since 2.0
+ * @package TutorPro
+ * @subpackage Templates\Email
+ *
+ * @since 2.0.0
  */
-$tutor_heading_background = sprintf( 'style="background: url(%s) top right no-repeat;"', TUTOR_EMAIL()->url . 'assets/images/heading.png' );
-$email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) ? $tutor_heading_background : '';
+
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -22,12 +24,12 @@ $email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) 
 
 
 			<?php require TUTOR_PRO()->path . 'templates/email/email_header.php'; ?>
-			<div class="tutor-email-content" <?php echo isset( $email_banner_background ) ? $email_banner_background : ''; ?>>
+			<div class="tutor-email-content">
 
 				<?php require TUTOR_PRO()->path . 'templates/email/email_heading_content.php'; ?>
 
 				<div class="tutor-email-buttons">
-					<a target="_blank" class="tutor-email-button-bordered" href="{link}" data-source="email-btn-url"><?php echo __( 'Verify Email Address', 'tutor-pro' ); ?></a>
+					<a target="_blank" class="tutor-email-button" href="{link}" data-source="email-btn-url"><?php esc_html_e( 'Verify Email Address', 'tutor-pro' ); ?></a>
 				</div>
 
 				<div style="margin-top: 25px;">

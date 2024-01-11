@@ -54,9 +54,8 @@ class Unicamp {
 	public static function setting( $option_name = '', $default = '' ) {
 		$value = Unicamp_Kirki::get_option( 'theme', $option_name );
 
-		$value = $value === null ? $default : $value;
+		return $value === null ? $default : $value;
 
-		return $value;
 	}
 
 	/**

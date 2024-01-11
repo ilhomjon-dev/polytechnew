@@ -9,6 +9,7 @@
  *
  * @package TutorLMS/Templates
  * @version 1.4.3
+ * @theme-deprecated 2.2.5
  */
 
 defined( 'ABSPATH' ) || exit;

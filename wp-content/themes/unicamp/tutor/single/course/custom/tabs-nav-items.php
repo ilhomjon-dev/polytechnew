@@ -58,9 +58,9 @@ $course_nav_items = apply_filters( 'tutor_course/single/enrolled/nav_items', [
 		<a href="#tutor-course-tab-google-classroom-stream"><?php echo esc_html( $course_nav_items['google-classroom-stream'] ); ?></a>
 	</li>
 <?php endif; ?>
-<?php if ( $unicamp_course->is_viewable() && isset( $course_nav_items['gradebook'] ) ): ?>
+<?php if ( $unicamp_course->is_viewable() && class_exists( '\TUTOR_GB\GradeBook' ) ): ?>
 	<li>
-		<a href="#tutor-course-tab-gradebook"><?php echo esc_html( $course_nav_items['gradebook'] ); ?></a>
+		<a href="#tutor-course-tab-gradebook"><?php esc_html_e( 'Gradebook', 'unicamp' ); ?></a>
 	</li>
 <?php endif; ?>
 <?php if ( $unicamp_course->get_reviews() ) : ?>

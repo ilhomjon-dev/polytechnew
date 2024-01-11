@@ -66,7 +66,7 @@ global $unicamp_course;
 							<?php if ( $unicamp_course->is_viewable() ) : ?>
 								<div id="tutor-course-tab-resources"
 								     class="single-course-tab single-course-tab-resources">
-									<?php get_tutor_posts_attachments(); ?>
+									<?php Unicamp_Tutor::instance()->single_course_attachment_html(); ?>
 								</div>
 
 								<div id="tutor-course-tab-question-and-answer"
@@ -94,11 +94,13 @@ global $unicamp_course;
 								</div>
 							<?php endif; ?>
 
-							<?php if ( $unicamp_course->is_viewable() ) : ?>
-								<div id="tutor-course-tab-gradebook"
-								     class="single-course-tab single-course-tab-gradebook">
-									<?php do_action( 'tutor_course/single/enrolled/gradebook', get_the_ID() ); ?>
-								</div>
+							<?php if ( $unicamp_course->is_viewable() ): ?>
+								<?php if ( class_exists( '\TUTOR_GB\GradeBook' ) ) { ?>
+									<div id="tutor-course-tab-gradebook"
+									     class="single-course-tab single-course-tab-gradebook">
+										<?php Unicamp_Tutor::instance()->get_grade_book_template(); ?>
+									</div>
+								<?php } ?>
 							<?php endif; ?>
 
 							<div id="tutor-course-tab-reviews" class="single-course-tab single-course-tab-reviews">
@@ -114,7 +116,7 @@ global $unicamp_course;
 
 							<?php do_action( 'tutor_course/single/before/sidebar' ); ?>
 
-							<?php Unicamp_Tutor::instance()->course_enroll_box(); ?>
+							<?php tutor_load_template( 'single.course.course-entry-box' ); ?>
 
 							<?php do_action( 'tutor_course/single/after/sidebar' ); ?>
 

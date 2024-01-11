@@ -120,16 +120,13 @@ class Widget_Product extends Posts_Base {
 			'separator'    => 'before',
 		] );
 
-		$this->add_group_control(
-			Group_Control_Image_Size::get_type(),
-			[
-				'name'      => 'thumbnail',
-				'default'   => 'full',
-				'condition' => [
-					'thumbnail_default_size!' => '1',
-				],
-			]
-		);
+		$this->add_group_control( Group_Control_Image_Size::get_type(), [
+			                                                              'name'      => 'thumbnail',
+			                                                              'default'   => 'full',
+			                                                              'condition' => [
+				                                                              'thumbnail_default_size!' => '1',
+			                                                              ],
+		                                                              ] );
 
 		$this->end_controls_section();
 	}
@@ -140,15 +137,16 @@ class Widget_Product extends Posts_Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 3,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
-			'selectors'      => [
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 3,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
+			'selectors'          => [
 				'{{WRAPPER}} .modern-grid' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
 			],
 		] );

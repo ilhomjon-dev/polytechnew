@@ -31,9 +31,9 @@ abstract class Carousel_Base extends Base {
 		] );
 
 		$this->add_responsive_control( 'swiper_items', [
-			'label'          => esc_html__( 'Slides Per View', 'unicamp' ),
-			'type'           => Controls_Manager::SELECT,
-			'options'        => array(
+			'label'              => esc_html__( 'Slides Per View', 'unicamp' ),
+			'type'               => Controls_Manager::SELECT,
+			'options'            => array(
 				'auto'       => esc_html__( 'Auto', 'unicamp' ),
 				'auto-fixed' => esc_html__( 'Auto - Fixed Width', 'unicamp' ),
 				'1'          => '1',
@@ -45,9 +45,10 @@ abstract class Carousel_Base extends Base {
 				'7'          => '7',
 				'8'          => '8',
 			),
-			'default'        => '3',
-			'tablet_default' => '2',
-			'mobile_default' => '1',
+			'default'            => '3',
+			'tablet_default'     => '2',
+			'mobile_default'     => '1',
+			'frontend_available' => true,
 		] );
 
 		/*
@@ -506,12 +507,12 @@ abstract class Carousel_Base extends Base {
 			'size_units'  => [ 'px', '%' ],
 			'range'       => [
 				'px' => [
-					'min'  => -1000,
+					'min'  => - 1000,
 					'max'  => 1000,
 					'step' => 1,
 				],
 				'%'  => [
-					'min' => -100,
+					'min' => - 100,
 					'max' => 100,
 				],
 			],
@@ -533,12 +534,12 @@ abstract class Carousel_Base extends Base {
 			'size_units'  => [ 'px', '%' ],
 			'range'       => [
 				'px' => [
-					'min'  => -1000,
+					'min'  => - 1000,
 					'max'  => 1000,
 					'step' => 1,
 				],
 				'%'  => [
-					'min' => -100,
+					'min' => - 100,
 					'max' => 100,
 				],
 			],

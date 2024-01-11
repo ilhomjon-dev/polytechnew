@@ -1,11 +1,13 @@
 <?php
 /**
- * @package TUTOR_LMS_PRO/EmailTemplates
+ * E-mail template for instructor when a student quiz completed.
  *
- * @since 2.0
+ * @package TutorPro
+ * @subpackage Templates\Email
+ *
+ * @since 2.0.0
  */
-$tutor_heading_background = sprintf( 'style="background: url(%s) top right no-repeat;"', TUTOR_EMAIL()->url . 'assets/images/heading.png' );
-$email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) ? $tutor_heading_background : '';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,18 +23,18 @@ $email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) 
 
 
 			<?php require TUTOR_PRO()->path . 'templates/email/email_header.php'; ?>
-			<div class="tutor-email-content" <?php echo isset( $email_banner_background ) ? $email_banner_background : ''; ?>>
+			<div class="tutor-email-content">
 				<?php require TUTOR_PRO()->path . 'templates/email/email_heading_content.php'; ?>
 
 				<table class="tutor-email-datatable">
 					<tr>
-						<td class="label"><?php echo __( 'Quiz Score:', 'tutor-pro' ); ?></td>
-						<td><strong>{earned_marks}</strong> out of <strong>{total_marks}</strong> {attempt_result}</td>
+						<td class="label"><?php esc_html_e( 'Quiz Score:', 'tutor-pro' ); ?></td>
+						<td><strong>{earned_marks}</strong> <?php esc_html_e( 'out of ', 'tutor-pro' ); ?> <strong>{total_marks}</strong> {attempt_result}</td>
 					</tr>
 				</table>
 
 				<div class="tutor-email-buttons">
-					<a target="_blank" class="tutor-email-button" href="{attempt_url}"><?php echo __( 'Review Attempt', 'tutor-pro' ); ?></a>
+					<a target="_blank" class="tutor-email-button" href="{attempt_url}"><?php esc_html_e( 'Review Attempt', 'tutor-pro' ); ?></a>
 				</div>
 
 			</div>

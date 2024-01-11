@@ -146,14 +146,15 @@ class Widget_Product_Categories extends Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 3,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 3,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -213,8 +214,8 @@ class Widget_Product_Categories extends Base {
 		] );
 
 		$categories = get_terms( [
-			'taxonomy' => self::PRODUCT_CATEGORY,
-		] );
+			                         'taxonomy' => self::PRODUCT_CATEGORY,
+		                         ] );
 
 		$options = [];
 		foreach ( $categories as $category ) {
@@ -234,8 +235,7 @@ class Widget_Product_Categories extends Base {
 		] );
 
 		$parent_options = [ '0' => esc_html__( 'Only Top Level', 'unicamp' ) ] + $options;
-		$this->add_control(
-			'parent', [
+		$this->add_control( 'parent', [
 			'label'     => esc_html__( 'Parent', 'unicamp' ),
 			'type'      => Controls_Manager::SELECT,
 			'default'   => '0',
@@ -504,7 +504,7 @@ class Widget_Product_Categories extends Base {
 		foreach ( $this->terms as $term ) {
 			$thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
 			$link         = get_term_link( $term );
-			$index++;
+			$index ++;
 			$item_key = 'image_key_' . $index;
 
 			$size   = $metro_layout[ $metro_item_count ];
@@ -540,7 +540,7 @@ class Widget_Product_Categories extends Base {
 				</a>
 			</div>
 			<?php
-			$metro_item_count++;
+			$metro_item_count ++;
 			if ( $metro_item_count == $count || $metro_layout_count == $metro_item_count ) {
 				$metro_item_count = 0;
 			}
@@ -554,9 +554,9 @@ class Widget_Product_Categories extends Base {
 		<div class="unicamp-image image">
 		<?php if ( ! empty( $thumbnail_id ) ) : ?>
 			<?php \Unicamp_Image::the_attachment_by_id( array(
-				'id'   => $thumbnail_id,
-				'size' => $image_size,
-			) ); ?>
+				                                            'id'   => $thumbnail_id,
+				                                            'size' => $image_size,
+			                                            ) ); ?>
 		<?php else: ?>
 			<?php echo wc_placeholder_img(); ?>
 		<?php endif; ?>

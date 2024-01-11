@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use TUTOR\Backend_Page_Trait;
+use Tutor\Helpers\QueryHelper;
+use TUTOR\Input;
+use TUTOR\User;
 
 /**
  * Enrollment list managements for the backend admin page
@@ -103,7 +106,7 @@ class Enrollments_List {
 				'value'  => 'complete',
 				'option' => __( 'Approve', 'tutor' ),
 			),
-			$this->bulk_action_cancel()
+			$this->bulk_action_cancel(),
 		);
 		return $actions;
 	}
@@ -166,39 +169,89 @@ class Enrollments_List {
 	}
 
 	/**
-	 * Handle bulk action for enrolment cancel | delete
+	 * Handle bulk action for enrolment list
 	 *
-	 * @return string JSON response.
-	 * @since v2.0.0
+	 * @since 2.0.0
+	 *
+	 * @return void JSON response.
 	 */
 	public function enrollment_bulk_action() {
-		// check nonce.
 		tutor_utils()->checking_nonce();
-		$status = isset( $_POST['bulk-action'] ) ? sanitize_text_field( $_POST['bulk-action'] ) : '';
-		$bulk_ids = isset( $_POST['bulk-ids'] ) ? sanitize_text_field( $_POST['bulk-ids'] ) : '';
-		$bulk_ids = explode(',', $bulk_ids);
-		$bulk_ids = array_filter($bulk_ids, function($id){
-			return is_numeric($id);
-		});
 
-		self::update_enrollments( $status, $bulk_ids );
+		$status   = Input::post( 'bulk-action', '' );
+		$bulk_ids = Input::post( 'bulk-ids', '' );
+		$bulk_ids = explode( ',', $bulk_ids );
+		$bulk_ids = array_filter(
+			$bulk_ids,
+			function( $id ) {
+				return is_numeric( $id );
+			}
+		);
+
+		if ( 'delete' === $status ) {
+			self::delete_cancelled_enrollment( $bulk_ids );
+		} else {
+			self::update_enrollments( $status, $bulk_ids );
+		}
+
 		wp_send_json_success();
+	}
+
+	/**
+	 * Delete only cancelled enrollment
+	 *
+	 * @since 2.2.4
+	 *
+	 * @param array $bulk_ids id list.
+	 *
+	 * @return void
+	 */
+	public static function delete_cancelled_enrollment( $bulk_ids ) {
+		if ( ! User::is_admin() ) {
+			wp_send_json_error( array( 'message' => __( 'Unauthorized action', 'tutor-pro' ) ) );
+		}
+
+		global $wpdb;
+		$ids_str = QueryHelper::prepare_in_clause( $bulk_ids );
+
+		// Delete course progress for selected ids.
+		foreach ( $bulk_ids as $id ) {
+			$course_id  = get_post_field( 'post_parent', $id );
+			$student_id = get_post_field( 'post_author', $id );
+
+			if ( $course_id && $student_id ) {
+				tutor_utils()->delete_course_progress( $course_id, $student_id );
+			}
+		}
+
+		// Now delete selected cancelled enrollments.
+		$wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM {$wpdb->posts}
+				WHERE ID IN ($ids_str)
+				AND post_type = %s
+				AND post_status = %s
+			",
+				'tutor_enrolled',
+				'cancel'
+			)
+		);
 	}
 
 	/**
 	 * Execute bulk action for enrollment list ex: complete | cancel
 	 *
 	 * @param string $status hold status for updating.
-	 * @param array $enrollment_ids ids that need to update.
+	 * @param array  $enrollment_ids ids that need to update.
 	 * @return bool
 	 * @since v2.0.0
 	 */
-	public static function update_enrollments(string $status, array $enrollment_ids ): bool {
+	public static function update_enrollments( string $status, array $enrollment_ids ): bool {
 		global $wpdb;
-		$enrollment_ids_in = implode(',', $enrollment_ids);
-		$status     = 'complete' === $status ? 'completed' : $status;
-		$post_table = $wpdb->posts;
-		$update     = $wpdb->query(
+		$enrollment_ids_in = implode( ',', $enrollment_ids );
+		$status            = 'complete' === $status ? 'completed' : $status;
+		$post_table        = $wpdb->posts;
+		$update            = $wpdb->query(
 			$wpdb->prepare(
 				" UPDATE {$post_table}
 				SET post_status = %s
@@ -208,20 +261,8 @@ class Enrollments_List {
 			)
 		);
 
-		// Clear course progress if cancelled
-		if($status=='cancelled' || $status=='cancel') {
-			foreach($enrollment_ids as $id) {
-				$course_id = get_post_field( 'post_parent', $id );
-				$student_id = get_post_field( 'post_author', $id );
-
-				if($course_id && $student_id) {
-					tutor_utils()->delete_course_progress($course_id, $student_id);
-				}
-			}
-		}
-
-		// Run action hook
-		foreach($enrollment_ids as $id) {
+		// Run action hook.
+		foreach ( $enrollment_ids as $id ) {
 			do_action( 'tutor_enrollment/after/' . $status, $id );
 		}
 

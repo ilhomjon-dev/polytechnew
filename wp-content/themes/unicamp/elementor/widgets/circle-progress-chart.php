@@ -3,7 +3,7 @@
 namespace Unicamp_Elementor;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -126,9 +126,8 @@ class Widget_Circle_Progress_Chart extends Base {
 		$this->add_control( 'bar_color', [
 			'label'  => esc_html__( 'Bar Color', 'unicamp' ),
 			'type'   => Controls_Manager::COLOR,
-			'scheme' => [
-				'type'  => Scheme_Color::get_type(),
-				'value' => Scheme_Color::COLOR_1,
+			'global' => [
+				'default' => Global_Colors::COLOR_PRIMARY,
 			],
 		] );
 

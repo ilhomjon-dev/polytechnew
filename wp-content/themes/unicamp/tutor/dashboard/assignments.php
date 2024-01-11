@@ -45,7 +45,7 @@ $courses      = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_cou
 				<?php foreach ( $assignments->results as $item ) : ?>
 					<?php
 					$max_mark      = tutor_utils()->get_assignment_option( $item->ID, 'total_mark' );
-					$course_id     = tutor_utils()->get_course_id_by_assignment( $item->ID );
+					$course_id     = tutor_utils()->get_course_id_by( 'assignment', $item->ID );
 					$course_url    = tutor_utils()->get_tutor_dashboard_page_permalink( 'assignments/course' );
 					$submitted_url = tutor_utils()->get_tutor_dashboard_page_permalink( 'assignments/submitted' );
 					$comment_count = $wpdb->get_var( "SELECT COUNT(comment_ID) FROM {$wpdb->comments} WHERE comment_type = 'tutor_assignment' AND comment_post_ID = $item->ID" );
@@ -71,7 +71,7 @@ $courses      = ( current_user_can( 'administrator' ) ) ? tutor_utils()->get_cou
 						<td>
 							<?php
 							$view_detail_btn_class = 'review-assignment-link hint--bounce ';
-							$view_detail_btn_class .= ! EDUMALL_IS_RTL ? 'hint--top-left' : 'hint--top-right';
+							$view_detail_btn_class .= ! UNICAMP_IS_RTL ? 'hint--top-left' : 'hint--top-right';
 
 							?>
 							<a class="<?php echo esc_attr( $view_detail_btn_class ); ?>"

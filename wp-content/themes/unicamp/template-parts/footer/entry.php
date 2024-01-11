@@ -7,7 +7,9 @@ if ( 'none' === $footer ) {
 ?>
 <div id="page-footer-wrapper" class="page-footer-wrapper">
 	<?php
-	if ( ! function_exists( 'elementor_location_exits' ) || ! elementor_location_exits( 'footer', true ) ) {
+	if ( function_exists( 'tm_addons_location_exits' ) && tm_addons_location_exits( 'tm_footer', true ) ) {
+		unicamp_load_template( 'footer/tm-elementor' );
+	} elseif ( ! function_exists( 'elementor_location_exits' ) || ! elementor_location_exits( 'footer', true ) ) {
 		unicamp_load_template( 'footer/simple' );
 	} else {
 		if ( function_exists( 'elementor_theme_do_location' ) ) :

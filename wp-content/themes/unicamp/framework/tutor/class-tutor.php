@@ -14,7 +14,7 @@ if ( ! class_exists( 'Unicamp_Tutor' ) ) {
 		 *
 		 * @var string
 		 */
-		const MINIMUM_TUTOR_VERSION = '2.0.1';
+		const MINIMUM_TUTOR_VERSION = '2.3.0';
 
 		/**
 		 * Minimum Tutor LMS Pro version required to run the theme.
@@ -23,7 +23,7 @@ if ( ! class_exists( 'Unicamp_Tutor' ) ) {
 		 *
 		 * @var string
 		 */
-		const MINIMUM_TUTOR_PRO_VERSION = '2.0.1';
+		const MINIMUM_TUTOR_PRO_VERSION = '2.3.0';
 
 		const PROFILE_QUERY_VAR = 'tutor_profile_username';
 
@@ -1178,24 +1178,9 @@ if ( ! class_exists( 'Unicamp_Tutor' ) ) {
 		 * @return mixed
 		 */
 		public function course_enroll_box( $echo = true ) {
-			global $unicamp_course;
-
-			$is_administrator      = current_user_can( 'administrator' );
-			$is_instructor         = tutor_utils()->is_instructor_of_this_course();
-			$course_content_access = (bool) get_tutor_option( 'course_content_access_for_ia' );
-
 			ob_start();
-
-			if ( $unicamp_course->is_enrolled() ) {
-				tutor_load_template( 'single.course.course-enrolled-box' );
-				$output = apply_filters( 'tutor_course/single/enrolled', ob_get_clean() );
-			} elseif ( $course_content_access && ( $is_administrator || $is_instructor ) ) {
-				tutor_load_template( 'single.course.continue-lesson' );
-				$output = apply_filters( 'tutor_course/single/continue_lesson', ob_get_clean() );
-			} else {
-				tutor_load_template( 'single.course.course-enroll-box' );
-				$output = apply_filters( 'tutor_course/single/enroll', ob_get_clean() );
-			}
+			tutor_load_template( 'single.course.course-entry-box' );
+			$output = ob_get_clean();
 
 			if ( $echo ) {
 				echo '' . $output;
@@ -1748,7 +1733,7 @@ if ( ! class_exists( 'Unicamp_Tutor' ) ) {
 		 * This function instead of for
 		 *
 		 * @see   \Tutor\Utils::get_course_id_by_lesson();
-		 * @see   \Tutor\Utils::get_course_id_by_assignment();
+		 * @see   \Tutor\Utils::get_course_id_by();
 		 *
 		 * Some case post meta _tutor_course_id_for_xx is empty then it make course permalink is wrong.
 		 *
@@ -2068,6 +2053,100 @@ if ( ! class_exists( 'Unicamp_Tutor' ) ) {
 			}
 
 			return $site_url . $user_name;
+		}
+
+		/**
+		 * @since  2.2.5
+		 */
+		public function single_course_attachment_html() {
+			?>
+			<div class="tutor-single-course-segment tutor-attachments-wrap">
+				<h4 class="tutor-segment-title"><?php esc_html_e( 'Resources', 'unicamp' ); ?></h4>
+				<?php get_tutor_posts_attachments(); ?>
+			</div>
+			<?php
+		}
+
+		/**
+		 * @since  2.2.5
+		 */
+		public function get_grade_book_template() {
+			if ( function_exists( 'TUTOR_GB' ) ) {
+				$tutor_gb = TUTOR_GB();
+
+				$course_id = get_the_ID();
+
+				include $tutor_gb->path . '/views/gradebook.php';
+			} else {
+				do_action( 'tutor_course/single/enrolled/gradebook', get_the_ID() );
+			}
+		}
+
+		/**
+		 * Clone function for fix bugs:
+		 * 1- SQL bug: {$wpdb->prefix}users
+		 * 2- SQL bug: Earning amount not properly for admin role when Revenue Sharing disable.
+		 *             SELECT SUM(instructor_amount)
+		 *
+		 * @param $instructor_id
+		 *
+		 * @return array|null|object|void
+		 * @see  \Tutor\Models\WithdrawModel::get_withdraw_summary()
+		 * @todo Remove when plugin author fix it.
+		 *
+		 */
+		public static function get_withdraw_summary( $instructor_id ) {
+			global $wpdb;
+
+			$maturity_days = tutor_utils()->get_option( 'minimum_days_for_balance_to_be_available' );
+
+			$sql_query = $wpdb->prepare(
+				"SELECT ID, display_name,
+                    total_income,total_withdraw,
+                    (total_income-total_withdraw) current_balance,
+                    total_matured,
+                    greatest(0, total_matured - total_withdraw) available_for_withdraw
+
+                FROM (
+                        SELECT ID,display_name,
+                    COALESCE((SELECT SUM(instructor_amount) FROM {$wpdb->prefix}tutor_earnings WHERE order_status='%s' GROUP BY user_id HAVING user_id=u.ID),0) total_income,
+
+                        COALESCE((
+                        SELECT sum(amount) total_withdraw FROM {$wpdb->prefix}tutor_withdraws
+                        WHERE status='%s'
+                        GROUP BY user_id
+                        HAVING user_id=u.ID
+                    ),0) total_withdraw,
+
+                    COALESCE((
+                        SELECT SUM(instructor_amount) FROM(
+                            SELECT user_id, instructor_amount, created_at, DATEDIFF(NOW(),created_at) AS days_old FROM {$wpdb->prefix}tutor_earnings WHERE order_status='%s'
+                        ) a
+                        WHERE days_old >= %d
+                        GROUP BY user_id
+                        HAVING user_id = u.ID
+                    ),0) total_matured
+
+                FROM {$wpdb->users} u WHERE u.ID=%d
+
+                ) a",
+				'completed',
+				\Tutor\Models\WithdrawModel::STATUS_APPROVED,
+				'completed',
+				$maturity_days,
+				$instructor_id
+			);
+
+			/**
+			 * Unicamp fix earning amount not properly for admin role when Revenue Sharing disable.
+			 */
+			if ( user_can( $instructor_id, 'administrator' ) ) {
+				$sql_query = str_replace( 'instructor_amount', 'admin_amount', $sql_query );
+			}
+
+			$data = $wpdb->get_row( $sql_query );
+
+			return $data;
 		}
 	}
 

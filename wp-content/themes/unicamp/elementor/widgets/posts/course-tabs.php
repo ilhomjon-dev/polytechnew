@@ -25,7 +25,7 @@ class Widget_Course_Tabs extends Base {
 			'elementor-frontend',
 			'unicamp-grid-layout',
 			'unicamp-grid-query',
-		), null, true );
+		),                  null, true );
 	}
 
 	public function get_name() {
@@ -160,10 +160,10 @@ class Widget_Course_Tabs extends Base {
 		];
 
 		$categories = get_terms( [
-			'taxonomy'   => $this->get_post_category(),
-			'parent'     => 0,
-			'hide_empty' => 0,
-		] );
+			                         'taxonomy'   => $this->get_post_category(),
+			                         'parent'     => 0,
+			                         'hide_empty' => 0,
+		                         ] );
 
 		$category_options = [];
 
@@ -220,14 +220,15 @@ class Widget_Course_Tabs extends Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 4,
-			'tablet_default' => 3,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 4,
+			'tablet_default'     => 3,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -354,7 +355,7 @@ class Widget_Course_Tabs extends Base {
 					<?php
 					$tab_key       = "nav_tab_{$key}_";
 					$this->tab_key = $tab_key;
-					$loop_count++;
+					$loop_count ++;
 
 					$this->add_render_attribute( $tab_key, 'role', 'tab' );
 
@@ -376,7 +377,7 @@ class Widget_Course_Tabs extends Base {
 					$tab_key       = "content_tab_{$key}_";
 					$this->tab_key = $tab_key;
 					$source        = $course_tab['query_source'];
-					$loop_count++;
+					$loop_count ++;
 
 					$query = [
 						'source' => $source,
@@ -472,7 +473,7 @@ class Widget_Course_Tabs extends Base {
 			<div class="swiper-inner">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<?php for ( $i = $number_posts; $i > 0; $i-- ): ?>
+						<?php for ( $i = $number_posts; $i > 0; $i -- ): ?>
 							<div class="swiper-slide">
 								<?php $this->print_skeleton_loading_item(); ?>
 							</div>
@@ -499,7 +500,7 @@ class Widget_Course_Tabs extends Base {
 		<div <?php $this->print_render_attribute_string( $grid_key ); ?>>
 			<div class="unicamp-grid lazy-grid">
 				<div class="grid-sizer"></div>
-				<?php for ( $i = $number_posts; $i > 0; $i-- ): ?>
+				<?php for ( $i = $number_posts; $i > 0; $i -- ): ?>
 					<div class="grid-item grid-skeleton-item">
 						<?php $this->print_skeleton_loading_item(); ?>
 					</div>

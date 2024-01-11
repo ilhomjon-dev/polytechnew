@@ -3,7 +3,7 @@
 Plugin Name: Insight Core
 Description: Core functions for WordPress theme
 Author: ThemeMove
-Version: 2.6.4
+Version: 2.6.6
 Author URI: https://thememove.com
 Text Domain: insight-core
 Domain Path: /languages/
@@ -17,7 +17,7 @@ if ( ! empty( $theme['Template'] ) ) {
 	$theme = wp_get_theme( $theme['Template'] );
 }
 define( 'INSIGHT_CORE_FILE', __FILE__ );
-define( 'INSIGHT_CORE_VERSION', '2.6.4' );
+define( 'INSIGHT_CORE_VERSION', '2.6.6' );
 define( 'INSIGHT_CORE_SITE_URI', site_url() );
 define( 'INSIGHT_CORE_PATH', plugin_dir_url( __FILE__ ) );
 define( 'INSIGHT_CORE_DIR', dirname( __FILE__ ) );

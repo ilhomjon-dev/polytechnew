@@ -176,14 +176,15 @@ class Widget_Image_Gallery extends Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 3,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 3,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -422,7 +423,7 @@ class Widget_Image_Gallery extends Base {
 		$image_size = \Unicamp_Image::elementor_parse_image_size( $settings, '600x600' );
 
 		foreach ( $settings['gallery'] as $image ) {
-			$this->loop_count++;
+			$this->loop_count ++;
 			?>
 			<div class="grid-item">
 				<?php $this->print_image( $image, $image_size ); ?>
@@ -449,7 +450,7 @@ class Widget_Image_Gallery extends Base {
 		$count              = count( $settings['gallery'] );
 
 		foreach ( $settings['gallery'] as $image ) {
-			$this->loop_count++;
+			$this->loop_count ++;
 			$item_key = 'image_key_' . $this->loop_count;
 
 			$size   = $metro_layout[ $metro_item_count ];
@@ -479,7 +480,7 @@ class Widget_Image_Gallery extends Base {
 				<?php $this->print_image( $image, $_image_size ); ?>
 			</div>
 			<?php
-			$metro_item_count++;
+			$metro_item_count ++;
 			if ( $metro_item_count == $count || $metro_layout_count == $metro_item_count ) {
 				$metro_item_count = 0;
 			}
@@ -519,9 +520,9 @@ class Widget_Image_Gallery extends Base {
 		<?php printf( '<%1$s %2$s>', $box_tag, $this->get_render_attribute_string( $box_key ) ); ?>
 		<div class="unicamp-image image">
 			<?php \Unicamp_Image::the_attachment_by_id( array(
-				'id'   => $image['id'],
-				'size' => $image_size,
-			) ); ?>
+				                                            'id'   => $image['id'],
+				                                            'size' => $image_size,
+			                                            ) ); ?>
 		</div>
 		<?php if ( ! empty( $settings['lightbox_enable'] ) ) { ?>
 			<div class="unicamp-overlay">

@@ -26,11 +26,55 @@ Unicamp – Professional LMS for University, College, and School WordPress Theme
 
 == Changelog ==
 
-= 2.2.2 - July 20 2023 =
+= 2.2.9 - December 19, 2023 =
+- Fixed:
+Fix items per view setting of Elementor Carousel & Grid widgets not working properly on mobile.
+
+= 2.2.8 - December 11, 2023 =
+- Fixed:
+Fix PHP waring from Elementor 3.18.0
+
+= 2.2.7 - December 8, 2023 =
+- Added:
+ThemeMove Addons For Elementor plugin v.1.3.1 (Allows creating footer without using Elementor Pro plugin)
+- Updated:
+Revolution Slider plugin - v.6.6.19
+Tutor LMS Pro plugin - v.2.5.0
+- Fixed:
+Fix Minor bugs CSS
+
+= 2.2.6 - December 6, 2023 =
+- Fixed:
+Fix PHP waring from Elementor 3.18.0
+
+= 2.2.5 - November 03, 2023 =
+- Updated:
+Insight Core plugin - v.2.6.6
+Revolution Slider plugin - v.6.6.18
+Tutor LMS Pro plugin - v.2.4.0
+Insight Swatches plugin - v.1.7.0
+- Fixed:
+Fix Course Archive grid column
+Tested up with Tutor 2.4.0
+
+= 2.2.4 - September 27, 2023 =
+- Updated:
+Revolution Slider plugin - v.6.6.16
+Tutor LMS Pro plugin - v.2.3.0
+- Fixed:
+Remove Deprecated Elementor Code
+
+= 2.2.3 - August 24, 2023 =
+- Updated:
+Insight Core plugin - v.2.6.5 (Compatible with WordPress 6.2.0)
+Revolution Slider plugin - v.6.6.15
+Tutor LMS Pro plugin - v.2.2.3
+
+= 2.2.2 - July 20, 2023 =
 - Fixed:
 Fix out-date WooCommerce templates v.7.9.0
 
-= 2.2.1 - July 17 2023 =
+= 2.2.1 - July 17, 2023 =
 - Updated:
 Tutor LMS plugin - v.2.2.2
 Revolution Slider plugin - v.6.6.14
@@ -39,20 +83,20 @@ Fix out-date WooCommerce templates v.7.8.0
 Fix Cart fragments issue with WooCommerce 7.8.0
 Fix Course attachment
 
-= 2.2.0 - May 04 2023 =
+= 2.2.0 - May 04, 2023 =
 - Updated:
 out-date plugins.
 out-date Elementor functions.
 - Fixed:
 ajax add to cart not working with variable products on single page.
 
-= 2.1.1 - September 21 2022 =
+= 2.1.1 - September 21, 2022 =
 - Updated:
 Optimized code.
 - Fixed:
 out-date Woocommerce templates.
 
-= 2.1.0 - September 21 2022 =
+= 2.1.0 - September 21, 2022 =
 - Updated:
 Allow html in profile bio.
 Tested up with Elementor 3.7.7
@@ -60,7 +104,7 @@ Tested up with Woocommerce 6.9.3
 - Fixed:
 out-date Woocommerce templates.
 
-= 2.0.3 - June 16 2022 =
+= 2.0.3 - June 16, 2022 =
 - Updated:
 Insight Core plugin - v.2.4.6
 Tutor LMS plugin - v.2.0.6
@@ -76,7 +120,7 @@ Reviews star unselectable
 Dashboard certificate page style
 Question not saved in Tutor 2.0.6
 
-= 2.0.2 - May 16 2022 =
+= 2.0.2 - May 16, 2022 =
 - Updated:
 Tutor LMS plugin - v.2.0.4
 Revolution Slider plugin - v.6.5.21
@@ -86,11 +130,11 @@ Assignment layout
 Public Profile page
 Certificate page
 
-= 2.0.1 - April 21 2022 =
+= 2.0.1 - April 21, 2022 =
 - Fixed:
 widget Social News not working properly.
 
-= 2.0.0 - April 18 2022 =
+= 2.0.0 - April 18, 2022 =
 - Updated:
 Tutor LMS plugin - v.2.0.1
 Revolution Slider plugin - v.6.5.20
@@ -103,7 +147,7 @@ Tested up Tutor LMS 2.0.1
 Tested up Woocommerce 6.4.0
 Tested up PHP 8.x.x
 
-= 1.3.1 - November 23 2021 =
+= 1.3.1 - November 23, 2021 =
 - Added:
 new Dashboard My Students page
 - Updated:
@@ -114,12 +158,12 @@ Insight Swatches plugin - v.1.2.3
 - Fixed:
 js bug on Animated Typed widget
 
-= 1.3.0 - November 02 2021 =
+= 1.3.0 - November 02, 2021 =
 - Fixed:
 Full support for Elementor Template.
 Compatible with PHP version 8.0.0
 
-= 1.2.0 - October 09 2021 =
+= 1.2.0 - October 09, 2021 =
 - Updated:
 Revolution Slider plugin - v.6.5.8
 Tutor LMS plugin - v.1.9.10
@@ -135,7 +179,7 @@ Course announcement display
 Fix Dashboard Style
 Out-date Tutor LMS templates
 
-= 1.1.0 - July 31 2021 =
+= 1.1.0 - July 31, 2021 =
 - Updated:
 Revolution Slider plugin - v.6.5.5
 Tutor LMS plugin - v.1.9.4
@@ -164,16 +208,16 @@ Show Wishlist button in Single Course for Admin role when Course Content Access 
 Course Certificate Layout
 Single Lesson url slug
 
-= 1.0.2 - May 31 2021 =
+= 1.0.2 - May 31, 2021 =
 - Fixed:
 Category page missing grid js script.
 Contact Form 7 widget broken layout.
 
-= 1.0.1 - May 14 2021 =
+= 1.0.1 - May 14, 2021 =
 - Updated:
 Demo link + content import.
 
-= 1.0.0 - May 13 2021 =
+= 1.0.0 - May 13, 2021 =
 Initial release
 
 == Credits ==

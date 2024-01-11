@@ -97,7 +97,8 @@ $thumb_url = get_tutor_course_thumbnail_src( 'post-thumbnail', $course_id );
 			</main>
 			<!-- Right sidebar -->
 			<aside class="tutor-col-xl-4">
-				<div class="tutor-single-course-sidebar tutor-mt-40 tutor-mt-xl-0">
+			<?php $sidebar_attr = apply_filters( 'tutor_course_details_sidebar_attr', '' ); ?>
+			<div class="tutor-single-course-sidebar tutor-mt-40 tutor-mt-xl-0" <?php echo esc_attr( $sidebar_attr ); ?> >
 					<?php if ( ( $is_mobile && 'bottom' === $enrollment_box_position ) || ! $is_mobile ) : ?>
 						<?php if ( $is_bundle_creator ) : ?>
 							<h3 class="tutor-course-details-widget-title tutor-fs-5 tutor-fw-bold tutor-color-black tutor-mb-16"><?php esc_html_e( 'Bundle Overview', 'tutor-pro' ); ?></h3>

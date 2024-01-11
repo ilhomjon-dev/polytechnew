@@ -62,22 +62,27 @@ class Modify_Widget_Form extends Modify_Base {
 		// Get control form field repeater.
 		$form_fields = $element->get_controls( 'form_fields' );
 
-		// Get form field list.
-		$fields = $form_fields['fields'];
+		if ( ! empty( $form_fields['fields']['width']['options'] ) ) {
+			// Get form field list.
+			$fields = $form_fields['fields'];
 
-		// Get old width options.
-		$old_option = $fields['width']['options'];
+			// Get old width options.
+			$old_option = $fields['width']['options'];
 
-		// Append new options.
-		$new_options = $old_option + [ 'fit' => esc_html__( 'Auto Fit', 'unicamp' ) ];
+			// Append new options.
+			$new_options = $old_option + [ 'fit' => esc_html__( 'Auto Fit', 'unicamp' ) ];
 
-		// Assign for control width.
-		$fields['width']['options'] = $new_options;
+			// Assign for control width.
+			$fields['width']['options'] = $new_options;
+
+			// Finally update all changed.
+			$element->update_control( 'form_fields', [
+				'fields' => $fields,
+			] );
+		}
 
 		// Finally update all changed.
 		$element->update_control( 'form_fields', [
-			'fields'      => $fields,
-			// Better repeater item label.
 			'title_field' => '<# if( field_label ) { #>{{{ field_label }}}<# } else { #>{{{ placeholder }}}<# } #>',
 		] );
 	}
@@ -132,12 +137,14 @@ class Modify_Widget_Form extends Modify_Base {
 		/**
 		 * Add custom width option for button submit.
 		 */
-		$button_width         = $element->get_controls( 'button_width' );
-		$button_width_options = $button_width['options'];
-		$button_width_options += [ 'custom' => esc_html__( 'Custom', 'edumall' ) ];
-		$element->update_responsive_control( 'button_width', [
-			'options' => $button_width_options,
-		] );
+		$button_width = $element->get_controls( 'button_width' );
+		if ( ! empty( $button_width['options'] ) ) {
+			$button_width_options = $button_width['options'];
+			$button_width_options += [ 'custom' => esc_html__( 'Custom', 'unicamp' ) ];
+			$element->update_responsive_control( 'button_width', [
+				'options' => $button_width_options,
+			] );
+		}
 
 		// Add custom width control for button submit.
 		$element->start_injection( [

@@ -44,7 +44,6 @@ class Assets {
 	 */
 	public function load_frontend_assets() {
 		wp_enqueue_style( 'tutor-course-bundle-frontend', Utils::asset_url( 'css/frontend.css' ), array(), TUTOR_VERSION );
-		//wp_enqueue_script( 'tutor-course-bundle-frontend', Utils::asset_url( 'js/frontend.js' ), array( 'jquery' ), TUTOR_VERSION, true );
 	}
 
 	/**
@@ -55,7 +54,7 @@ class Assets {
 	 * @return void
 	 */
 	public function load_backend_assets() {
-		if ( is_admin() && ( CourseBundle::POST_TYPE === Input::get( 'page' ) || CourseBundle::POST_TYPE === Input::get( 'post_type' ) ) ) {
+		if ( is_admin() && ( CourseBundle::POST_TYPE === Input::get( 'page', '' ) || CourseBundle::POST_TYPE === Input::get( 'post_type', '' ) || CourseBundle::POST_TYPE === get_post_type( get_the_ID() ) ) ) {
 			wp_enqueue_style( 'tutor-course-bundle-backend', Utils::asset_url( 'css/backend.css' ), array(), TUTOR_VERSION );
 			wp_enqueue_script( 'tutor-course-bundle-backend', Utils::asset_url( 'js/backend.js' ), array( 'jquery' ), TUTOR_VERSION, true );
 		}
@@ -87,13 +86,22 @@ class Assets {
 	 * @return array
 	 */
 	public static function inline_script_data(): array {
-		$post_type = Input::get( 'post_type', '' );
-		if ( '' === $post_type ) {
-			$post_type = get_post_type( get_the_ID() );
+		$is_bundle_editor = false;
+
+		// For frontend bundle editor.
+		if ( tutils()->is_tutor_dashboard() && Input::get( 'bundle-id', 0, Input::TYPE_INT ) ) {
+			$is_bundle_editor = true;
+		}
+
+		// For backend bundle editor.
+		if ( is_admin() && ( CourseBundle::POST_TYPE === Input::get( 'post_type', '' ) || CourseBundle::POST_TYPE === get_post_type( get_the_ID() ) ) ) {
+				$is_bundle_editor = true;
 		}
 
 		$data = array(
-			'is_course_bundle_editor' => CourseBundle::POST_TYPE === $post_type ? true : false,
+			'is_course_bundle_editor'     => $is_bundle_editor,
+			'course_bundle_list_page_url' => admin_url( 'admin.php?page=' . CourseBundle::POST_TYPE ),
+			'course_bundle_post_type'     => CourseBundle::POST_TYPE,
 		);
 
 		return apply_filters( 'tutor_pro_course_bundle_inline_data', $data );

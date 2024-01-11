@@ -1,11 +1,13 @@
 <?php
 /**
- * @package TUTOR_LMS_PRO/EmailTemplates
+ * E-mail template for instructor when a withdrawal request received.
  *
- * @since 2.0
+ * @package TutorPro
+ * @subpackage Templates\Email
+ *
+ * @since 2.0.0
  */
-$tutor_heading_background = sprintf( 'style="background: url(%s) top right no-repeat;"', TUTOR_EMAIL()->url . 'assets/images/heading.png' );
-$email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) ? $tutor_heading_background : '';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,17 +23,17 @@ $email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) 
 
 
 			<?php require TUTOR_PRO()->path . 'templates/email/email_header.php'; ?>
-			<div class="tutor-email-content" <?php echo isset( $email_banner_background ) ? $email_banner_background : ''; ?>>
+			<div class="tutor-email-content">
 				<?php require TUTOR_PRO()->path . 'templates/email/email_heading_content.php'; ?>
 
 				<table class="tutor-email-datatable">
 					<tr>
-						<td class="label"><?php echo __( 'Withdraw Amount:', 'tutor-pro' ); ?></td>
-						<td><strong><?php echo __( '{withdraw_amount}', 'tutor-pro' ); ?></strong></td>
+						<td class="label"><?php esc_html_e( 'Withdraw Amount:', 'tutor-pro' ); ?></td>
+						<td><strong><?php _e( '{withdraw_amount}', 'tutor-pro' );//phpcs:ignore ?></strong></td>
 					</tr>
 					<tr>
-						<td class="label"><?php echo __( 'Current Balance:', 'tutor-pro' ); ?></td>
-						<td><strong><?php echo __( '{total_amount}', 'tutor-pro' ); ?></strong></td>
+						<td class="label"><?php esc_html_e( 'Current Balance:', 'tutor-pro' ); ?></td>
+						<td><strong><?php _e( '{total_amount}', 'tutor-pro' );//phpcs:ignore ?></strong></td>
 					</tr>
 				</table>
 			</div>

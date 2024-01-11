@@ -3,7 +3,7 @@
 namespace Unicamp_Elementor;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,9 +44,8 @@ class Modify_Widget_Heading extends Modify_Base {
 		$element->add_control( 'link_hover_color', [
 			'label'     => esc_html__( 'Link Hover Color', 'unicamp' ),
 			'type'      => Controls_Manager::COLOR,
-			'scheme'    => [
-				'type'  => Scheme_Color::get_type(),
-				'value' => Scheme_Color::COLOR_1,
+			'global' => [
+				'default' => Global_Colors::COLOR_PRIMARY,
 			],
 			'selectors' => [
 				// Stronger selector to avoid section style from overwriting.

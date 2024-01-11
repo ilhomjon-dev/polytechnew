@@ -1,12 +1,13 @@
 <?php
 /**
- * @package TUTOR_LMS_PRO/EmailTemplates
+ * E-mail template for instructor when a student ask a question.
  *
- * @since 2.0
+ * @package TutorPro
+ * @subpackage Templates\Email
+ *
+ * @since 2.0.0
  */
 
-$tutor_heading_background = sprintf( 'style="background: url(%s) top right no-repeat;"', TUTOR_EMAIL()->url . 'assets/images/heading.png' );
-$email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) ? $tutor_heading_background : '';
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,15 +19,12 @@ $email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) 
 
 <body>
 	<div class="tutor-email-body">
-		<div class="tutor-email-wrapper" style="background-color: #fff;">
+		<div class="tutor-email-wrapper">
 			<?php require TUTOR_PRO()->path . 'templates/email/email_header.php'; ?>
-			<div class="tutor-email-content" <?php echo isset( $email_banner_background ) ? $email_banner_background : ''; ?>>
+			<div class="tutor-email-content">
 				<?php require TUTOR_PRO()->path . 'templates/email/email_heading_content.php'; ?>
 
 				<div class="tutor-user-info">
-					<p style="color: #41454f; margin-bottom: 10px">
-						<?php _e( 'Student - {student_name} has asked a question on the course {course_name}.', 'tutor-pro' ); ?>
-					</p>
 					<div class="tutor-user-info-wrap">
 						<?php if ( isset( $_GET['edit'] ) && 'a_student_placed_question' === $_GET['edit'] ) : ?>
 							<img class="tutor-email-avatar" src="<?php echo esc_url( get_avatar_url( wp_get_current_user()->ID ) ); ?>" alt="author" width="50" height="50">
@@ -45,7 +43,7 @@ $email_banner_background  = false == get_tutor_option( 'email_disable_banner' ) 
 				</div>
 
 				<div class="tutor-email-buttons tutor-h-center">
-					<a target="_blank" class="tutor-email-button" href="{course_url}"><?php echo __( 'Reply Q&amp;A', 'tutor-pro' ); ?></a>
+					<a href="{question_url}" data-source="email-btn-url" target="_blank" class="tutor-email-button"><?php esc_html_e( 'Reply Q&amp;A', 'tutor-pro' ); ?></a>
 				</div>
 
 			</div>

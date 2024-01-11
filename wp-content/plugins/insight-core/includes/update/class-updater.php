@@ -56,7 +56,6 @@ if ( ! class_exists( 'InsightCore_Updater' ) ) {
 
 			if ( ! empty( $recommended_plugins ) && ! empty( $installed_plugins ) ) {
 				$overridden_plugins = [
-					'elementor-pro',
 					'tutor-pro',
 					'sctv-sales-countdown-timer',
 					'woocommerce-multi-currency',

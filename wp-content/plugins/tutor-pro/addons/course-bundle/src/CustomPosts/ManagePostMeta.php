@@ -56,7 +56,7 @@ class ManagePostMeta {
 	public function update_bundle_meta( int $post_id, WP_Post $post ) {
 		$product_id = (int) get_post_meta( $post_id, CourseModel::WC_PRODUCT_META_KEY, true );
 
-		$sale_price = Input::post( 'tutor-bundle-sale-price', 0, Input::TYPE_INT );
+		$sale_price = Input::post( 'tutor-bundle-sale-price', 0, Input::TYPE_NUMERIC );
 		$reg_price  = BundlePrice::get_bundle_regular_price( $post_id );
 
 		$product_id = Course::create_wc_product( $post->post_title, $reg_price, $sale_price, $product_id );

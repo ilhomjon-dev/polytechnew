@@ -10451,7 +10451,8 @@ body.tutor-screen-course-builder .select2-container .select2-search__field {
   height: 100px; }
 
 .tutor-modal-ins-approval .tutor-avatar img {
-  object-fit: cover; }
+  -o-object-fit: cover;
+     object-fit: cover; }
 
 .tutor-modal-ins-approval .tutor-modal-buttons {
   max-width: 280px;
@@ -14525,7 +14526,8 @@ table.tutor-ui-table.tutor-ui-table-purchase-history th {
 
 .tutor-course-details-page .tutor-course-thumbnail-bg img {
   aspect-ratio: 16/9;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 100%;
   height: auto; }
 
@@ -14841,7 +14843,8 @@ table.tutor-ui-table.tutor-ui-table-purchase-history th {
 .tutor-avatar-circle img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   -webkit-flex-shrink: 0;
       -ms-flex-negative: 0;
           flex-shrink: 0; }

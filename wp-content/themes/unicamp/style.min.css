@@ -5,7 +5,7 @@ Theme URI: https://unicamp.thememove.com
 Author: ThemeMove
 Author URI: https://thememove.com
 Description: Unicamp – Professional LMS for University, College, and School WordPress Theme
-Version: 2.2.2
+Version: 2.2.9
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: unicamp
@@ -9689,6 +9689,11 @@ body.loaded .page-loading {
   left: auto;
   right: 12px; }
 
+#powerTip .tutor-btn.tutor-btn-outline-primary {
+  width: 100%;
+  border-width: 2px;
+  border-style: solid; }
+
 .price,
 .amount,
 .tr-price,
@@ -11455,7 +11460,8 @@ body.search .search-page-search-form {
       border-radius: 50%;
       height: 100%;
       width: 100%;
-      object-fit: cover; }
+      -o-object-fit: cover;
+         object-fit: cover; }
     .unicamp-wp-widget-filter ul.filter-image-list .filter-swatch:before {
       content: '';
       position: absolute;
@@ -12043,7 +12049,8 @@ body:not(.elementor-editor-active) .modern-grid .grid-item {
 .unicamp-grid-metro .grid-item-height .unicamp-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; }
+  -o-object-fit: cover;
+     object-fit: cover; }
 
 .lazy-grid {
   display: -ms-grid;
@@ -13439,7 +13446,8 @@ a.tm-button.style-thick-border:hover:after {
     .tm-cover-image-box .image img {
       height: 100%;
       width: 100%;
-      object-fit: cover; }
+      -o-object-fit: cover;
+         object-fit: cover; }
   .tm-cover-image-box .title {
     font-size: 16px;
     line-height: 30px;
@@ -14194,7 +14202,8 @@ body .point_style a:hover img {
   position: relative;
   height: 100%; }
   .unicamp-modern-carousel-style-01 .slide-image img {
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     height: 100%; }
 
 .unicamp-modern-carousel-style-01 .slide-overlay {
@@ -15866,7 +15875,8 @@ body .point_style a:hover img {
   .unicamp-blog-metro .post-thumbnail img {
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    -o-object-fit: cover;
+       object-fit: cover; }
 
 .unicamp-blog-metro .post-title {
   line-height: 1.6;
@@ -15986,7 +15996,8 @@ body .point_style a:hover img {
 .unicamp-blog-zigzag .highlight-item .post-thumbnail img {
   width: 100%;
   height: 680px;
-  object-fit: cover; }
+  -o-object-fit: cover;
+     object-fit: cover; }
 
 .unicamp-blog-zigzag .highlight-item .post-categories {
   color: #fff;
@@ -16231,7 +16242,8 @@ body .point_style a:hover img {
     height: 100%; }
     .unicamp-blog-one-left-featured .featured-post .post-thumbnail img {
       height: 100%;
-      object-fit: cover; }
+      -o-object-fit: cover;
+         object-fit: cover; }
 
 .unicamp-blog-one-left-featured .normal-post .unicamp-box {
   display: -webkit-box;
@@ -16404,7 +16416,8 @@ body .point_style a:hover img {
     .unicamp-student-story-list .student-story-image-item img {
       height: 100%;
       width: 100%;
-      object-fit: cover;
+      -o-object-fit: cover;
+         object-fit: cover;
       -webkit-transition: all 1s;
       transition: all 1s;
       -webkit-transform: scale(0.9, 0.9);
@@ -16644,7 +16657,8 @@ body .point_style a:hover img {
   .unicamp-course.style-metro .course-thumbnail-wrapper .course-thumbnail img {
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    -o-object-fit: cover;
+       object-fit: cover; }
 
 .course-caption-style-01 .course-wrapper {
   background: #fff;
@@ -20011,7 +20025,8 @@ body:not(.elementor-editor-active) .unicamp-timeline .unicamp-entrance-animation
   .unicamp-popup-video-poster-background-yes .tm-popup-video.type-poster .unicamp-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    -o-object-fit: cover;
+       object-fit: cover; }
 
 @-webkit-keyframes hozirontalMove {
   0% {

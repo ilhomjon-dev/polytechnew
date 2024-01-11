@@ -147,14 +147,15 @@ class Widget_Course_Languages extends Terms_Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 4,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 4,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -377,9 +378,9 @@ class Widget_Course_Languages extends Terms_Base {
 							<?php if ( ! empty( $flag_id ) ) : ?>
 								<div class="course-language-flag">
 									<?php \Unicamp_Image::the_attachment_by_id( array(
-										'id'   => $flag_id,
-										'size' => 'full',
-									) ); ?>
+										                                            'id'   => $flag_id,
+										                                            'size' => 'full',
+									                                            ) ); ?>
 								</div>
 							<?php endif; ?>
 
@@ -417,7 +418,7 @@ class Widget_Course_Languages extends Terms_Base {
 		foreach ( $terms as $term ) {
 			$thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
 			$link         = get_term_link( $term );
-			$index++;
+			$index ++;
 			$item_key = 'image_key_' . $index;
 
 			$size   = $metro_layout[ $metro_item_count ];
@@ -455,7 +456,7 @@ class Widget_Course_Languages extends Terms_Base {
 				</a>
 			</div>
 			<?php
-			$metro_item_count++;
+			$metro_item_count ++;
 			if ( $metro_item_count == $count || $metro_layout_count == $metro_item_count ) {
 				$metro_item_count = 0;
 			}
@@ -469,9 +470,9 @@ class Widget_Course_Languages extends Terms_Base {
 		<div class="unicamp-image image">
 		<?php if ( ! empty( $thumbnail_id ) ) : ?>
 			<?php \Unicamp_Image::the_attachment_by_id( array(
-				'id'   => $thumbnail_id,
-				'size' => $image_size,
-			) ); ?>
+				                                            'id'   => $thumbnail_id,
+				                                            'size' => $image_size,
+			                                            ) ); ?>
 		<?php else: ?>
 			<?php // echo wc_placeholder_img(); ?>
 		<?php endif; ?>

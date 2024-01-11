@@ -1,10 +1,12 @@
 <?php
 /**
- * @package TUTOR_LMS_PRO/EmailTemplates
- * @since 2.0
+ * E-mail template to sent test email.
+ *
+ * @package TutorPro
+ * @subpackage Templates\Email
+ *
+ * @since 2.0.0
  */
-
-use function WPML\FP\Strings\replace;
 
 ?>
 
@@ -23,7 +25,7 @@ use function WPML\FP\Strings\replace;
 	<div style="border-bottom: 1px solid #e0e2ea; padding: 20px 50px">
 		<img src="{logo}" alt="" style="width: 107.39px;" data-source="email-title-logo">
 	</div>
-	<div class="tutor-email-content" <?php echo isset( $email_banner_background ) ? $email_banner_background : ''; ?>>
+	<div class="tutor-email-content">
 		<div style="margin-bottom: 50px">
 			<h6 data-source="email-heading" style="
 					overflow-wrap: break-word;
@@ -37,11 +39,11 @@ use function WPML\FP\Strings\replace;
 		</div>
 		<div style="color: #212327; font-weight: 400; font-size: 16px; line-height: 162%">
 
-		<p><?php _e( '{student_username},', 'tutor-pro' ); ?></p>
+		<p><?php _e( '{student_username},', 'tutor-pro' );//phpcs:ignore ?></p>
 
 			<div data-source="email-additional-message">
 				<p>
-					<?php _e( '<strong>{username}</strong> just submitted answers for <strong>{quiz_name}</strong> in course <strong>{site_url}</strong> at <strong>{submission_time}</strong>. You can review it from: <strong>{quiz_review_url}</strong>.', 'tutor-pro' ); ?>
+					<?php _e( '<strong>{username}</strong> just submitted answers for <strong>{quiz_name}</strong> in course <strong>{site_url}</strong> at <strong>{submission_time}</strong>. You can review it from: <strong>{quiz_review_url}</strong>.', 'tutor-pro' );//phpcs:ignore ?>
 				</p>
 			</div>
 		</div>

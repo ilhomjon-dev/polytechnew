@@ -56,7 +56,7 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 					switch ( $key ) {
 						case 'checkbox':
 							?>
-							<td data-th="<?php esc_attr_e( 'Mark', 'edumall' ); ?>" class="tutor-shrink">
+							<td data-th="<?php esc_attr_e( 'Mark', 'unicamp' ); ?>" class="tutor-shrink">
 								<div class="td-checkbox tutor-d-flex tutor-align-items-center">
 									<input id="tutor-admin-list-<?php echo $qna->comment_ID; ?>" type="checkbox"
 									       class="tutor-form-check-input tutor-bulk-checkbox"
@@ -88,11 +88,11 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
                                             class="<?php echo $is_important ? 'tutor-icon-msg-important-fill-filled' : 'tutor-icon-msg-important-filled'; ?> tutor-icon-20 tutor-cursor-pointer" data-action="important"></i>
                                              -->
 										<span class="tooltip-txt tooltip-right">
-                                                <?php $is_important ? esc_html_e( 'This conversation is important', 'edumall' ) : esc_html_e( 'Mark this conversation as important', 'edumall' ); ?>
+                                                <?php $is_important ? esc_html_e( 'This conversation is important', 'unicamp' ) : esc_html_e( 'Mark this conversation as important', 'unicamp' ); ?>
                                             </span>
 									</div>
 									<img src="<?php echo esc_url( get_avatar_url( $qna->user_id ) ); ?>"
-									     alt="<?php echo esc_attr( $qna->display_name ); ?> - <?php esc_attr_e( 'Profile Picture', 'edumall' ); ?>"/>
+									     alt="<?php echo esc_attr( $qna->display_name ); ?> - <?php esc_attr_e( 'Profile Picture', 'unicamp' ); ?>"/>
 									<div class="">
 										<div class="tutor-fs-6 tutor-fw-medium  tutor-color-black">
 											<?php echo $qna->display_name; ?>
@@ -127,7 +127,7 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 											</div>
 											<div class="">
 													<span
-														class="tutor-fs-8 tutor-fw-medium tutor-color-black-60"><?php esc_html_e( 'Course', 'edumall' ); ?>
+														class="tutor-fs-8 tutor-fw-medium tutor-color-black-60"><?php esc_html_e( 'Course', 'unicamp' ); ?>
 														:</span>
 												<span
 													class="tutor-fs-7 tutor-fw-normal tutor-color-black-60"><?php echo $qna->post_title; ?></span>
@@ -163,7 +163,7 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 								<div class="tooltip-wrap">
 									<i class=" tutor-font-size-24 <?php echo $is_solved ? 'tutor-icon-mark-cricle tutor-text-success' : 'tutor-icon-tick-circle-outline-filled tutor-color-black-40'; ?>"></i>
 									<span class="tooltip-txt tooltip-bottom">
-                                            <?php $is_solved ? esc_html_e( 'Solved', 'edumall' ) : esc_html_e( 'Unresolved Yet', 'edumall' ); ?>
+                                            <?php $is_solved ? esc_html_e( 'Solved', 'unicamp' ) : esc_html_e( 'Unresolved Yet', 'unicamp' ); ?>
                                         </span>
 								</div>
 							</td>
@@ -176,7 +176,7 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 								<div class="inline-flex-center td-action-btns">
 									<a href="<?php echo add_query_arg( array( 'question_id' => $qna->comment_ID ), tutor()->current_url ); ?>"
 									   class="tutor-btn tutor-btn-disable-outline tutor-btn-outline-fd tutor-btn-sm">
-										<?php esc_html_e( 'Reply', 'edumall' ); ?>
+										<?php esc_html_e( 'Reply', 'unicamp' ); ?>
 									</a>
 
 									<!-- ToolTip Action -->
@@ -191,12 +191,12 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 													<a href="#" data-action="archived"
 													   data-state-text-selector=".text-regular-body"
 													   data-state-class-selector=".color-design-white"
-													   data-state-text-0="<?php esc_attr_e( 'Archive', 'edumall' ); ?>"
-													   data-state-text-1="<?php esc_attr_e( 'Un-archive', 'edumall' ); ?>">
+													   data-state-text-0="<?php esc_attr_e( 'Archive', 'unicamp' ); ?>"
+													   data-state-text-1="<?php esc_attr_e( 'Un-archive', 'unicamp' ); ?>">
 															<span
 																class="tutor-icon-msg-archive-filled tutor-color-design-white tutor-font-size-24 tutor-mr-4"></span>
 														<span class="text-regular-body tutor-color-white">
-                                                                <?php $is_archived ? esc_html_e( 'Un-archive', 'edumall' ) : esc_html_e( 'Archive', 'edumall' ); ?>
+                                                                <?php $is_archived ? esc_html_e( 'Un-archive', 'unicamp' ) : esc_html_e( 'Archive', 'unicamp' ); ?>
                                                             </span>
 													</a>
 												</li>
@@ -205,13 +205,13 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 												<a href="#" data-action="read"
 												   data-state-text-selector=".text-regular-body"
 												   data-state-class-selector=".color-design-white"
-												   data-state-text-0="<?php esc_attr_e( 'Mark as Read', 'edumall' ); ?>"
-												   data-state-text-1="<?php esc_attr_e( 'Mark as Unread', 'edumall' ); ?>">
+												   data-state-text-0="<?php esc_attr_e( 'Mark as Read', 'unicamp' ); ?>"
+												   data-state-text-1="<?php esc_attr_e( 'Mark as Unread', 'unicamp' ); ?>">
 														<span
 															class="tutor-icon-envelope-filled tutor-color-design-white tutor-font-size-24 tutor-mr-4"></span>
 													<span class="text-regular-body tutor-color-white"
 													      style="text-align: left;">
-                                                            <?php $is_read ? esc_html_e( 'Mark as Unread', 'edumall' ) : esc_html_e( 'Mark as read', 'edumall' ); ?>
+                                                            <?php $is_read ? esc_html_e( 'Mark as Unread', 'unicamp' ) : esc_html_e( 'Mark as read', 'unicamp' ); ?>
                                                         </span>
 												</a>
 											</li>
@@ -221,7 +221,7 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 														<span
 															class="tutor-icon-delete-fill-filled tutor-color-design-white tutor-font-size-24 tutor-mr-4"></span>
 													<span
-														class="text-regular-body tutor-color-white"><?php esc_html_e( 'Delete', 'edumall' ); ?></span>
+														class="text-regular-body tutor-color-white"><?php esc_html_e( 'Delete', 'unicamp' ); ?></span>
 												</a>
 											</li>
 										</ul>
@@ -243,22 +243,22 @@ $view_as       = isset( $view_as ) ? $view_as : ( is_admin() ? 'instructor' : 's
 													</div>
 													<div class="tutor-modal-text-wrap">
 														<h3 class="tutor-modal-title">
-															<?php esc_html_e( 'Delete This Question?', 'edumall' ); ?>
+															<?php esc_html_e( 'Delete This Question?', 'unicamp' ); ?>
 														</h3>
 														<p>
-															<?php esc_html_e( 'All the replies also will be deleted.', 'edumall' ); ?>
+															<?php esc_html_e( 'All the replies also will be deleted.', 'unicamp' ); ?>
 														</p>
 													</div>
 													<div
 														class="tutor-modal-footer tutor-modal-btns tutor-btn-group">
 														<button data-tutor-modal-close
 														        class="tutor-btn tutor-is-outline tutor-is-default">
-															<?php esc_html_e( 'Cancel', 'edumall' ); ?>
+															<?php esc_html_e( 'Cancel', 'unicamp' ); ?>
 														</button>
 														<button class="tutor-btn tutor-list-ajax-action"
 														        data-request_data='{"question_id":<?php echo $qna->comment_ID; ?>,"action":"tutor_delete_dashboard_question"}'
 														        data-delete_element_id="<?php echo $row_id; ?>">
-															<?php esc_html_e( 'Yes, Delete This', 'edumall' ); ?>
+															<?php esc_html_e( 'Yes, Delete This', 'unicamp' ); ?>
 														</button>
 													</div>
 												</div>

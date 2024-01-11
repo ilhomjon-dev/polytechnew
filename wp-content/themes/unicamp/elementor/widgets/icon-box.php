@@ -6,7 +6,7 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -723,7 +723,9 @@ class Widget_Icon_Box extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'title',
 			'selector' => '{{WRAPPER}} .heading',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 		] );
 
 		$this->start_controls_tabs( 'title_colors' );
@@ -883,7 +885,9 @@ class Widget_Icon_Box extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'description',
 			'selector' => '{{WRAPPER}} .description',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_TEXT,
+			],
 		] );
 
 		$this->start_controls_tabs( 'description_colors' );

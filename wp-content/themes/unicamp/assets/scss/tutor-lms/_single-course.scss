@@ -211,21 +211,11 @@ a.tutor-button.certificate-download-btn {
 	.tutor-progress-bar {
 		margin: 9px .5em 0;
 		background-color: #eee;
-		border-radius: 0;
-
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: -.5em;
-			right: -.5em;
-			background: inherit;
-			border-radius: inherit;
-		}
+		border-radius: 30px;
 
 		.tutor-progress-filled {
 			position: relative;
+            height: 100%;
 			background: $heading-color;
 
 			&:before {
@@ -1008,6 +998,7 @@ a.tutor-button.certificate-download-btn {
 
 	.tutor-review-user-info {
 		float: none;
+        margin-left: 10px;
 
 		.review-name {
 			font-size: 14px;
@@ -1270,6 +1261,7 @@ a.tutor-button.certificate-download-btn {
 	margin: -32px -32px 28px;
 	border-radius: 0;
 	overflow: hidden;
+    position: relative;
 
 	> img {
 		border-radius: 5px 5px 0 0;
@@ -1373,6 +1365,16 @@ a.tutor-button.certificate-download-btn {
 	.tutor-alert {
 		margin: 15px 0 0;
 	}
+
+    .tutor-btn {
+        margin-bottom: 10px;
+    }
+
+    .tutor-icon-purchase-mark:before {
+        font-size: 18px;
+        margin-top: 5px;
+        display: inline-block;
+    }
 }
 
 .tutor-course-enrolled-wrap {
@@ -1606,6 +1608,15 @@ a.tutor-button.certificate-download-btn {
 		}
 	}
 
+    .tutor-gradebook-finalgrade {
+        margin-bottom: 15px;
+        padding: 0;
+    }
+
+    .tutor-gradebook-grade-badge {
+        padding: 10px;
+    }
+
 	&.single-course-01 {
 		.page-title-bar {
 			margin-bottom: 0 !important;
@@ -1614,6 +1625,11 @@ a.tutor-button.certificate-download-btn {
 		.tutor-single-course-main-content {
 			padding-top: 51px;
 		}
+
+        .tutor-gradebook,
+        .tutor-empty-state {
+            margin-bottom: 45px;
+        }
 
 		.tutor-course-top-info {
 			background: #f8f8f8;
@@ -1657,9 +1673,15 @@ a.tutor-button.certificate-download-btn {
 				display: flex;
 				flex-wrap: wrap;
 
-				a.tutor-button {
+                .tutor-btn,
+                .tutor-button,
+                .tm-button {
 					width: auto;
 				}
+
+                form.tutor-mt-20 {
+                    margin-top: 0;
+                }
 			}
 		}
 
@@ -1676,7 +1698,8 @@ a.tutor-button.certificate-download-btn {
 		}
 
 		.tutor-single-course-main-content {
-			.tutor-single-course-segment {
+			.tutor-single-course-segment,
+            .single-course-tab-gradebook {
 				background: #fff;
 				border: 0;
 				border-radius: 0;
@@ -1699,6 +1722,23 @@ a.tutor-button.certificate-download-btn {
 				}
 			}
 		}
+
+        .tutor-course-form-actions {
+            .tutor-btn {
+                margin: 0 10px 10px 0;
+            }
+
+            .tutor-icon-purchase-mark:before {
+                font-size: 18px;
+                margin-top: 5px;
+                display: inline-block;
+            }
+        }
+
+        .single-instructor-wrap {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
 	}
 
 	&.single-course-03 {

@@ -77,6 +77,12 @@ class Assets {
 		 * @since v2.1.0
 		 */
 		wp_localize_script( 'tutor-pro-front', '_tutor_pro_trans', self::translate_able_text() );
+
+		if ( is_single() && tutor()->course_post_type === get_post_type( get_the_ID() ) ) {
+			wp_enqueue_style( 'tutor-pro-course-details', tutor_pro()->url . 'assets/css/course-details.css', array(), TUTOR_VERSION );
+		}
+
+		wp_enqueue_style( 'tutor-pro-front', tutor_pro()->url . 'assets/css/front.css', array(), TUTOR_VERSION );
 	}
 
 	/**
@@ -97,7 +103,11 @@ class Assets {
 			wp_enqueue_script( 'tutor-tinymce-codesample', tutor_pro()->url . 'assets/lib/codesample/prism.min.js', array( 'jquery' ), TUTOR_VERSION, true );
 			wp_enqueue_script( 'tutor-tinymce-code', tutor_pro()->url . 'assets/lib/tinymce/code.plugin.min.js', array( 'jquery' ), TUTOR_VERSION, true );
 		}
-		wp_enqueue_style( 'tutor-codesample', tutor_pro()->url . 'assets/lib/codesample/prism.css', array(), TUTOR_VERSION );
+
+		wp_enqueue_style( 'tutor-prism-css', tutor_pro()->url . 'assets/lib/codesample/prism.css', array(), TUTOR_VERSION );
+		wp_enqueue_script( 'tutor-prism-js', tutor_pro()->url . 'assets/lib/prism/prism.min.js', array( 'jquery' ), TUTOR_VERSION, true );
+		wp_enqueue_script( 'tutor-prism-script', tutor_pro()->url . 'assets/lib/prism/script.js', array( 'jquery' ), TUTOR_VERSION, true );
+
 	}
 
 	/**

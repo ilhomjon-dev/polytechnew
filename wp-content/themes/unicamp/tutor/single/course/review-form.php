@@ -4,17 +4,16 @@
  * @version       1.4.3
  *
  * @theme-since   1.0.0
- * @theme-version 3.0.0
+ * @theme-version 2.2.5
  */
 
-$isLoggedIn = is_user_logged_in();
-$rating     = $isLoggedIn ? tutor_utils()->get_course_rating_by_user() : '';
+use TUTOR\Input;
 
-if ( $isLoggedIn && ( ! empty( $rating->rating ) || ! empty( $rating->review ) ) ) {
-	$heading = __( 'Edit review', 'unicamp' );
-} else {
-	$heading = __( 'Write a review', 'unicamp' );
-}
+$isLoggedIn = is_user_logged_in();
+$course_id  = Input::post( 'course_id', get_the_ID(), Input::TYPE_INT );
+$my_rating  = tutor_utils()->get_reviews_by_user( 0, 0, 150, false, $course_id, array( 'approved', 'hold' ) );
+$is_new     = ! $my_rating || empty( $my_rating->rating ) || empty( $my_rating->comment_content );
+$heading    = $is_new ? __( 'Write a review', 'unicamp' ) : __( 'Edit review', 'unicamp' );
 
 $button_args = [
 	'link'        => [
@@ -57,11 +56,13 @@ if ( ! $isLoggedIn ) {
 							<div class="tutor-write-review-box tutor-star-rating-container">
 								<div class="tutor-ratings tutor-ratings-lg tutor-ratings-selectable"
 								     tutor-ratings-selectable>
-									<?php tutor_utils()->star_rating_generator( tutor_utils()->get_rating_value( $rating->rating ) ); ?>
+									<?php tutor_utils()->star_rating_generator( tutor_utils()->get_rating_value( $my_rating ? $my_rating->rating : 0 ) ); ?>
 								</div>
 								<div class="tutor-form-group">
 									<textarea name="review"
-									          placeholder="<?php esc_attr_e( 'Write a review', 'unicamp' ); ?>"><?php echo stripslashes( $rating->review ); ?></textarea>
+									          placeholder="<?php esc_attr_e( 'Write a review', 'unicamp' ); ?>">
+										<?php echo stripslashes( $my_rating ? $my_rating->comment_content : '' ); ?>
+									</textarea>
 								</div>
 
 								<div class="form-response-messages"></div>
@@ -69,17 +70,17 @@ if ( ! $isLoggedIn ) {
 								<div class="tutor-form-group">
 									<div class="button-group">
 										<?php Unicamp_Templates::render_button( [
-											'link'        => [
-												'url' => 'javascript:void(0);',
-											],
-											'text'        => esc_html__( 'Cancel', 'unicamp' ),
-											'extra_class' => 'button-grey',
-											'attributes'  => [
-												'data-unicamp-toggle'  => 'modal',
-												'data-unicamp-target'  => '#modal-course-review-add',
-												'data-unicamp-dismiss' => '1',
-											],
-										] ); ?>
+											                                        'link'        => [
+												                                        'url' => 'javascript:void(0);',
+											                                        ],
+											                                        'text'        => esc_html__( 'Cancel', 'unicamp' ),
+											                                        'extra_class' => 'button-grey',
+											                                        'attributes'  => [
+												                                        'data-unicamp-toggle'  => 'modal',
+												                                        'data-unicamp-target'  => '#modal-course-review-add',
+												                                        'data-unicamp-dismiss' => '1',
+											                                        ],
+										                                        ] ); ?>
 										<div class="tm-button-wrapper">
 											<button type="submit"
 											        class="custom_tutor_submit_review_btn tutor-button tutor-success"><?php esc_html_e( 'Submit Review', 'unicamp' ); ?></button>

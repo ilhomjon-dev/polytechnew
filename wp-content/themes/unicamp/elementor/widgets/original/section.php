@@ -42,20 +42,22 @@ class Modify_Widget_Section extends Modify_Base {
 		// Get section args.
 		$section_gap = Plugin::instance()->controls_manager->get_control_from_stack( $element->get_unique_name(), 'gap' );
 
-		$gap_options = $section_gap['options'];
+		if ( ! empty ( $section_gap['options'] ) ) {
+			$gap_options = $section_gap['options'];
 
-		// Change 'Default' => 'Normal' text.
-		if ( isset( $gap_options['default'] ) ) {
-			$gap_options['default'] = esc_html__( 'Normal', 'unicamp' );
+			// Change 'Default' => 'Normal' text.
+			if ( isset( $gap_options['default'] ) ) {
+				$gap_options['default'] = esc_html__( 'Normal', 'unicamp' );
+			}
+
+			// Add new gap option 'custom'.
+			if ( ! isset( $gap_options['custom'] ) ) {
+				$gap_options['custom'] = esc_html__( 'Custom', 'unicamp' );
+			}
+
+			// Set new options.
+			$section_gap['options'] = $gap_options;
 		}
-
-		// Add new gap option 'custom'.
-		if ( ! isset( $gap_options['custom'] ) ) {
-			$gap_options['custom'] = esc_html__( 'Custom', 'unicamp' );
-		}
-
-		// Set new options.
-		$section_gap['options'] = $gap_options;
 
 		// Change default gap setting from 'default' => 'extended'.
 		$section_gap['default'] = 'extended';

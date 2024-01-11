@@ -144,11 +144,11 @@ class BundlePrice implements MetaBoxInterface {
 	 *
 	 * @param integer $bundle_id int bundle id.
 	 *
-	 * @return int
+	 * @return int|float
 	 */
-	public static function get_bundle_sale_price( int $bundle_id ): int {
+	public static function get_bundle_sale_price( int $bundle_id ) {
 		$price = tutor_utils()->get_raw_course_price( $bundle_id );
-		return (int) $price->sale_price ?? 0;
+		return is_numeric( $price->sale_price ) ? $price->sale_price : 0;
 	}
 
 	/**

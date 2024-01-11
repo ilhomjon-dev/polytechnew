@@ -31,8 +31,9 @@ if ( '' !== $date_filter ) {
 
 //phpcs:enable WordPress.WP.GlobalVariablesOverride.Prohibited
 
-$statements = Analytics::get_statements_by_user( $user->ID, $offset, $per_page, $course_id, $date_filter );
-$courses    = CourseModel::get_courses_by_instructor();
+$statements            = Analytics::get_statements_by_user( $user->ID, $offset, $per_page, $course_id, $date_filter );
+$courses               = CourseModel::get_courses_by_instructor();
+$enable_fees_deducting = tutor_utils()->get_option( 'enable_fees_deducting' );
 ?>
 <div class="tutor-analytics-statements">
 	<div class="tutor-row tutor-gx-xl-5 tutor-mb-24">
@@ -73,9 +74,11 @@ $courses    = CourseModel::get_courses_by_instructor();
 					<th>
 						<?php esc_html_e( 'Admin Gets', 'tutor-pro' ); ?>
 					</th>
+					<?php if ( $enable_fees_deducting ) : ?>
 					<th>
 						<?php esc_html_e( 'Fees', 'tutor-pro' ); ?>
 					</th>
+					<?php endif; ?>
 				</thead>
 
 				<tbody>
@@ -138,16 +141,23 @@ $courses    = CourseModel::get_courses_by_instructor();
 								</div>
 							</td>
 
+							<?php if ( $enable_fees_deducting ) : ?>
 							<td>
 								<?php $service_rate_type = 'percent' === $statement->deduct_fees_type ? '%' : ''; ?>
 								<div class="tutor-fs-7 tutor-fw-medium tutor-color-black">
 									<?php echo wp_kses_post( tutor_utils()->tutor_price( $statement->deduct_fees_amount ) ); ?> <br />
 									<span class="tutor-fs-7 tutor-color-muted">
-										<?php esc_html_e( $statement->deduct_fees_name, 'tutor-pro' ); //phpcs:ignore ?>
-										<?php esc_html_e( 'Maintenance Fees', 'tutor-pro' ); ?>
+										<?php
+										if ( empty( $statement->deduct_fees_name ) ) {
+											esc_html_e( 'Maintenance Fees', 'tutor-pro' );
+										} else {
+											esc_html_e( $statement->deduct_fees_name, 'tutor-pro' ); //phpcs:ignore
+										}
+										?>
 									</span>
 								</div>
 							</td>
+							<?php endif; ?>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>

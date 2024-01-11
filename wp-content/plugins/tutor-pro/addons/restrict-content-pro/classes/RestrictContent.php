@@ -90,7 +90,7 @@ class RestrictContent extends Tutor_Base {
 				</div>
 				<div class="tutor-restrict-content-message-wrapper tutor-justify-center tutor-align-center tutor-flex-column">
 					<a class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block" href="<?php echo esc_url( rcp_get_registration_page_url() ); ?>">
-						<?php echo esc_html( 'Get Membership', 'tutor-pro' ); ?>
+						<?php esc_html_e( 'Get Membership', 'tutor-pro' ); ?>
 					</a>
 				</div>
 				<?php
@@ -114,19 +114,19 @@ class RestrictContent extends Tutor_Base {
 			$has_membership_access = \rcp_user_can_access( get_current_user_id(), $post->ID );
 			if ( $has_membership_access ) {
 		?>
-					<div class="tutor-course-sidebar-card-btns <?php echo is_user_logged_in() ? '' : 'tutor-course-entry-box-login'; ?>" data-login_url="<?php echo $login_url; ?>">
-						<form class="tutor-enrol-course-form" method="post">
-							<?php wp_nonce_field( tutor()->nonce_action, tutor()->nonce ); ?>
-							<input type="hidden" name="tutor_course_id" value="<?php echo esc_attr( get_the_ID() ); ?>">
-							<input type="hidden" name="tutor_course_action" value="_tutor_course_enroll_now">
-							<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button">
-								<?php esc_html_e( 'Enroll Now', 'tutor' ); ?>
-							</button>
-						</form>
-					</div>
-					<div class="tutor-fs-7 tutor-color-muted tutor-mt-20 tutor-text-center">
-						<?php esc_html_e( 'This course is under your membership plan', 'tutor' ); ?>
-						</div>
+			<div class="tutor-course-sidebar-card-btns <?php echo is_user_logged_in() ? '' : 'tutor-course-entry-box-login'; ?>" data-login_url="<?php echo $login_url; ?>">
+				<form class="tutor-enrol-course-form" method="post">
+					<?php wp_nonce_field( tutor()->nonce_action, tutor()->nonce ); ?>
+					<input type="hidden" name="tutor_course_id" value="<?php echo esc_attr( get_the_ID() ); ?>">
+					<input type="hidden" name="tutor_course_action" value="_tutor_course_enroll_now">
+					<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button">
+						<?php esc_html_e( 'Enroll Now', 'tutor' ); ?>
+					</button>
+				</form>
+			</div>
+			<div class="tutor-fs-7 tutor-color-muted tutor-mt-20 tutor-text-center">
+				<?php esc_html_e( 'This course is under your membership plan', 'tutor' ); ?>
+			</div>
 		<?php
 				return;
 			} else {
@@ -155,11 +155,11 @@ class RestrictContent extends Tutor_Base {
 
 				<div class="tutor-rcp-membership-content">
 					<div class="tutor-fs-6 tutor-color-secondary tutor-mb-24">
-						<?php echo esc_html( apply_filters( 'tutor_restrict_content_msg', rcp_get_restricted_content_message() ) ); ?>
+						<?php echo wp_kses_post( apply_filters( 'tutor_restrict_content_msg', rcp_get_restricted_content_message() ) ); ?>
 					</div>
 
 					<a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block" href="<?php echo esc_url( rcp_get_registration_page_url() ); ?>">
-						<?php echo esc_html( 'Get Membership', 'tutor-pro' ); ?>
+						<?php esc_html_e( 'Get Membership', 'tutor-pro' ); ?>
 					</a>
 				</div>
 				<?php

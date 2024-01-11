@@ -28,7 +28,7 @@ if ( $assignments->count ) : ?>
 				<?php foreach ( $assignments->results as $item ) : ?>
 					<?php
 					$max_mark      = tutor_utils()->get_assignment_option( $item->ID, 'total_mark' );
-					$course_id     = tutor_utils()->get_course_id_by_assignment( $item->ID );
+					$course_id     = tutor_utils()->get_course_id_by( 'assignment', $item->ID );
 					$course_url    = tutor_utils()->get_tutor_dashboard_page_permalink( 'assignments/course' );
 					$submitted_url = tutor_utils()->get_tutor_dashboard_page_permalink( 'assignments/submitted' );
 					$comment_count = $wpdb->get_var( "SELECT COUNT(comment_ID) FROM {$wpdb->comments} WHERE comment_type = 'tutor_assignment' AND comment_post_ID = $item->ID" );

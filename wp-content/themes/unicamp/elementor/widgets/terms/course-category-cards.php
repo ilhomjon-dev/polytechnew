@@ -70,10 +70,10 @@ class Widget_Course_Category_Cards extends Base {
 		$taxonomy_name = $this->get_taxonomy_name();
 
 		$categories = get_terms( [
-			'taxonomy'   => $taxonomy_name,
-			'parent'     => 0,
-			'hide_empty' => 0,
-		] );
+			                         'taxonomy'   => $taxonomy_name,
+			                         'parent'     => 0,
+			                         'hide_empty' => 0,
+		                         ] );
 
 		$options = [];
 		foreach ( $categories as $category ) {
@@ -109,14 +109,15 @@ class Widget_Course_Category_Cards extends Base {
 		] );
 
 		$this->add_responsive_control( 'grid_columns', [
-			'label'          => esc_html__( 'Columns', 'unicamp' ),
-			'type'           => Controls_Manager::NUMBER,
-			'min'            => 1,
-			'max'            => 12,
-			'step'           => 1,
-			'default'        => 4,
-			'tablet_default' => 2,
-			'mobile_default' => 1,
+			'label'              => esc_html__( 'Columns', 'unicamp' ),
+			'type'               => Controls_Manager::NUMBER,
+			'min'                => 1,
+			'max'                => 12,
+			'step'               => 1,
+			'default'            => 4,
+			'tablet_default'     => 2,
+			'mobile_default'     => 1,
+			'frontend_available' => true,
 		] );
 
 		$this->add_responsive_control( 'grid_gutter', [
@@ -365,11 +366,11 @@ class Widget_Course_Category_Cards extends Base {
 		$new_cat_ids = array_unique( $new_cat_ids );
 
 		$new_terms = get_terms( [
-			'taxonomy'   => $this->get_taxonomy_name(),
-			'include'    => $new_cat_ids,
-			'orderby'    => 'include',
-			'hide_empty' => false,
-		] );
+			                        'taxonomy'   => $this->get_taxonomy_name(),
+			                        'include'    => $new_cat_ids,
+			                        'orderby'    => 'include',
+			                        'hide_empty' => false,
+		                        ] );
 
 		$this->add_render_attribute( 'grid-wrapper', 'class', 'unicamp-grid-wrapper unicamp-course-category-cards style-' . $settings['style'] );
 

@@ -7,7 +7,7 @@ use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Repeater;
 use Elementor\Utils;
 
@@ -420,7 +420,9 @@ class Widget_Pricing_Table extends Base {
 			'name'     => 'title',
 			'label'    => esc_html__( 'Title Typography', 'unicamp' ),
 			'selector' => '{{WRAPPER}} .title',
-			'scheme'   => Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 		] );
 
 		$this->add_control( 'pricing_content_skin_hr', [

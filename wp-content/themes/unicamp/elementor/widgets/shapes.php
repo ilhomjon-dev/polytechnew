@@ -3,7 +3,7 @@
 namespace Unicamp_Elementor;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color as Scheme_Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 
@@ -328,9 +328,8 @@ class Widget_Shapes extends Base {
 				'{{WRAPPER}} .shape'                => 'color: {{VALUE}};',
 				'{{WRAPPER}} .elementor-shape-fill' => 'fill: {{VALUE}};',
 			],
-			'scheme'    => [
-				'type'  => Scheme_Color::get_type(),
-				'value' => Scheme_Color::COLOR_1,
+			'global' => [
+				'default' => Global_Colors::COLOR_PRIMARY,
 			],
 			'condition' => [
 				'type!' => [ 'rectangle' ],

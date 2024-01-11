@@ -1,4 +1,9 @@
 <?php
+/**
+ * Courses
+ *
+ * @package Course List
+ */
 
 use TUTOR\Input;
 use TUTOR_REPORT\PageController;

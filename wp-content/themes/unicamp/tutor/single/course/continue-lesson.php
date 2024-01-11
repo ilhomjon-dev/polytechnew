@@ -2,16 +2,17 @@
 /**
  * Template for displaying course content
  *
- * @since         v.1.6.7
+ * @since            v.1.6.7
  *
- * @author        Themeum
+ * @author           Themeum
  * @url https://themeum.com
  *
- * @package       TutorLMS/Templates
- * @version       v.1.6.7
+ * @package          TutorLMS/Templates
+ * @version          v.1.6.7
  *
- * @theme-since   1.0.0
- * @theme-version 2.0.0
+ * @theme-since      1.0.0
+ * @theme-version    2.0.0
+ * @theme-deprecated 2.2.5
  */
 
 defined( 'ABSPATH' ) || exit;

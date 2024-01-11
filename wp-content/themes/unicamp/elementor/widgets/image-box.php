@@ -9,7 +9,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -596,7 +596,9 @@ class Widget_Image_Box extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'title_typography',
 			'selector' => '{{WRAPPER}} .title',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 		] );
 
 		$this->add_control( 'heading_description', [
@@ -640,7 +642,9 @@ class Widget_Image_Box extends Base {
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'description_typography',
 			'selector' => '{{WRAPPER}} .description',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_3,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_TEXT,
+			],
 		] );
 
 		$this->end_controls_section();

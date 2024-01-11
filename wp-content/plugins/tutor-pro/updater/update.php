@@ -29,7 +29,7 @@
 
                 if(!isset($this->meta['is_product_free']) || $this->meta['is_product_free']!==true) {
                     add_action( 'admin_enqueue_scripts', array( $this, 'license_page_asset_enqueue' ) );
-                    add_action( 'admin_menu', array( $this, 'add_license_page' ), 20 );
+                    add_action( 'tutor_after_settings_menu', array( $this, 'add_license_page' ) );
                     add_action( 'admin_init', array( $this, 'check_license_key' ) );
                     add_action( 'admin_notices', array( $this, 'show_invalid_license_notice' ) );
                 }

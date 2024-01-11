@@ -2741,7 +2741,8 @@ form.isw-swatches.isw-swatches--in-single .isw-swatch--isw_image {
     form.isw-swatches.isw-swatches--in-single .isw-swatch--isw_image .isw-term-swatch img {
       height: 100%;
       width: 100%;
-      object-fit: cover;
+      -o-object-fit: cover;
+         object-fit: cover;
       border-radius: inherit;
       border: 1px solid #ededed; }
     form.isw-swatches.isw-swatches--in-single .isw-swatch--isw_image .isw-term-swatch:before {

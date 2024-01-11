@@ -42,6 +42,27 @@ class BundleList {
 		add_action( 'wp_ajax_tutor_bundle_list_bulk_action', array( $this, 'handle_bulk_action' ) );
 		add_action( 'wp_ajax_tutor_change_bundle_status', array( $this, 'change_bundle_status' ) );
 		add_action( 'wp_ajax_tutor_bundle_delete', array( $this, 'delete_bundle' ) );
+		add_action( 'trashed_post', array( $this, 'redirect_to_bundle_list_page' ) );
+	}
+
+	/**
+	 * After trash a bundle direct to the bundle list page
+	 *
+	 * @since 2.2.4
+	 *
+	 * @param integer $post_id int bundle id.
+	 *
+	 * @return void
+	 */
+	public static function redirect_to_bundle_list_page( int $post_id ): void {
+		$post = get_post( $post_id );
+		if ( CourseBundle::POST_TYPE === $post->post_type ) {
+			$is_gutenberg_enabled = tutor_utils()->get_option( 'enable_gutenberg_course_edit' );
+			if ( ! $is_gutenberg_enabled ) {
+				wp_safe_redirect( admin_url( 'admin.php?page=course-bundle' ) );
+				exit;
+			}
+		}
 	}
 
 	/**
@@ -102,6 +123,8 @@ class BundleList {
 		$draft     = self::count( 'draft', $category_slug, $post_id, $date, $search );
 		$pending   = self::count( 'pending', $category_slug, $post_id, $date, $search );
 		$trash     = self::count( 'trash', $category_slug, $post_id, $date, $search );
+		$private   = self::count( 'private', $category_slug, $post_id, $date, $search );
+		$future    = self::count( 'future', $category_slug, $post_id, $date, $search );
 
 		$tabs = array(
 			array(
@@ -133,6 +156,18 @@ class BundleList {
 				'title' => __( 'Pending', 'tutor-pro' ),
 				'value' => $pending,
 				'url'   => $url . '&data=pending',
+			),
+			array(
+				'key'   => 'future',
+				'title' => __( 'Scheduled', 'tutor-pro' ),
+				'value' => $future,
+				'url'   => $url . '&data=future',
+			),
+			array(
+				'key'   => 'private',
+				'title' => __( 'Private', 'tutor-pro' ),
+				'value' => $private,
+				'url'   => $url . '&data=private',
 			),
 			array(
 				'key'   => 'trash',
@@ -172,7 +207,7 @@ class BundleList {
 		);
 
 		if ( 'all' === $status || 'mine' === $status ) {
-			$args['post_status'] = array( 'publish', 'pending', 'draft', 'private' );
+			$args['post_status'] = array( 'publish', 'pending', 'draft', 'private', 'future' );
 		} else {
 			$args['post_status'] = array( $status );
 		}
@@ -314,13 +349,24 @@ class BundleList {
 
 		$status = Input::post( 'status' );
 		$id     = Input::post( 'id' );
+		$bundle = get_post( $id );
+
+		if ( CourseBundle::POST_TYPE !== $bundle->post_type ) {
+			wp_send_json_error( tutor_utils()->error_message() );
+		}
 
 		$args = array(
 			'ID'          => $id,
 			'post_status' => $status,
 		);
-		wp_update_post( $args );
 
+		if ( 'future' === $bundle->post_status && 'publish' === $status ) {
+			$args['post_status']   = 'publish';
+			$args['post_date']     = current_time( 'mysql' );
+			$args['post_date_gmt'] = current_time( 'mysql', 1 );
+		}
+
+		wp_update_post( $args );
 		wp_send_json_success();
 		exit;
 	}

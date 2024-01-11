@@ -58,7 +58,7 @@ if ( 'dark' === $top_info_skin ) {
 							<?php tutor_course_topics(); ?>
 
 							<?php if ( $unicamp_course->is_viewable() ) : ?>
-								<?php get_tutor_posts_attachments(); ?>
+								<?php Unicamp_Tutor::instance()->single_course_attachment_html(); ?>
 								<?php tutor_course_question_and_answer(); ?>
 							<?php endif; ?>
 
@@ -73,7 +73,10 @@ if ( 'dark' === $top_info_skin ) {
 							<?php endif; ?>
 
 							<?php if ( $unicamp_course->is_viewable() ): ?>
-								<?php do_action( 'tutor_course/single/enrolled/gradebook', get_the_ID() ); ?>
+								<?php if ( class_exists( '\TUTOR_GB\GradeBook' ) ) { ?>
+									<h4 class="tutor-segment-title"><?php esc_html_e( 'Gradebook', 'unicamp' ); ?></h4>
+									<?php Unicamp_Tutor::instance()->get_grade_book_template(); ?>
+								<?php } ?>
 							<?php endif; ?>
 
 							<?php tutor_course_target_reviews_html(); ?>
@@ -87,7 +90,7 @@ if ( 'dark' === $top_info_skin ) {
 
 							<?php do_action( 'tutor_course/single/before/sidebar' ); ?>
 
-							<?php Unicamp_Tutor::instance()->course_enroll_box(); ?>
+							<?php tutor_load_template( 'single.course.course-entry-box' ); ?>
 
 							<?php do_action( 'tutor_course/single/after/sidebar' ); ?>
 

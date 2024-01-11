@@ -5,7 +5,7 @@ namespace Unicamp_Elementor;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography as Scheme_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Modules\DynamicTags\Module as TagsModule;
 
 defined( 'ABSPATH' ) || exit;
@@ -192,13 +192,17 @@ class Widget_Typed_Headline extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'headline',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .unicamp-headline',
 		] );
 
 		$this->add_group_control( Group_Control_Text_Stroke::get_type(), [
 			'name'     => 'text_stroke',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .unicamp-headline',
 		] );
 
@@ -244,13 +248,17 @@ class Widget_Typed_Headline extends Base {
 
 		$this->add_group_control( Group_Control_Typography::get_type(), [
 			'name'     => 'animated_text',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .headline-animate-text',
 		] );
 
 		$this->add_group_control( Group_Control_Text_Stroke::get_type(), [
 			'name'     => 'animated_text_text_stroke',
-			'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+			'global' => [
+				'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+			],
 			'selector' => '{{WRAPPER}} .headline-animate-text',
 		] );
 
