@@ -19,6 +19,7 @@ use ElementorPro\Modules\Woocommerce\Classes\Products_Renderer;
 use ElementorPro\Modules\Woocommerce\Widgets\Products as Products_Widget;
 use Elementor\Icons_Manager;
 use ElementorPro\Modules\LoopBuilder\Module as LoopBuilderModule;
+use ElementorPro\License\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -30,7 +31,52 @@ class Module extends Module_Base {
 	const TEMPLATE_MINI_CART = 'cart/mini-cart.php';
 	const OPTION_NAME_USE_MINI_CART = 'use_mini_cart_template';
 	const MENU_CART_FRAGMENTS_ACTION = 'elementor-menu-cart-fragments';
+	const MENU_CART_LICENSE_FEATURE_NAME = 'woocommerce-menu-cart';
+	const SINGLE_PRODUCT_TEMPLATE_LICENSE_FEATURE_NAME = 'product-single';
+	const ARCHIVE_PRODUCT_TEMPLATE_LICENSE_FEATURE_NAME = 'product-archive';
+	const SITE_SETTINGS_PAGES_LICENSE_FEATURE_NAME = 'settings-woocommerce-pages';
+	const SITE_SETTINGS_NOTICES_LICENSE_FEATURE_NAME = 'settings-woocommerce-notices';
+	const DYNAMIC_TAGS_LICENSE_FEATURE_NAME = 'dynamic-tags-wc';
 	const LOOP_PRODUCT_SKIN_ID = 'product';
+	const WC_PERSISTENT_SITE_SETTINGS = [
+		'woocommerce_cart_page_id',
+		'woocommerce_checkout_page_id',
+		'woocommerce_myaccount_page_id',
+		'woocommerce_terms_page_id',
+		'woocommerce_purchase_summary_page_id',
+		'woocommerce_shop_page_id',
+	];
+	const WIDGET_NAME_CLASS_NAME_MAP = [
+		'woocommerce-products' => 'Products',
+		'wc-products' => 'Products_Deprecated',
+		'woocommerce-product-add-to-cart' => 'Product_Add_To_Cart',
+		'wc-elements' => 'Elements',
+		'wc-categories' => 'Categories',
+		'woocommerce-product-price' => 'Product_Price',
+		'woocommerce-product-title' => 'Product_Title',
+		'woocommerce-product-images' => 'Product_Images',
+		'woocommerce-product-upsell' => 'Product_Upsell',
+		'woocommerce-product-short-description' => 'Product_Short_Description',
+		'woocommerce-product-meta' => 'Product_Meta',
+		'woocommerce-product-stock' => 'Product_Stock',
+		'woocommerce-product-rating' => 'Product_Rating',
+		'woocommerce-product-data-tabs' => 'Product_Data_Tabs',
+		'woocommerce-product-related' => 'Product_Related',
+		'woocommerce-breadcrumb' => 'Breadcrumb',
+		'wc-add-to-cart' => 'Add_To_Cart',
+		'wc-archive-products' => 'Archive_Products',
+		'woocommerce-archive-products' => 'Archive_Products_Deprecated',
+		'woocommerce-product-additional-information' => 'Product_Additional_Information',
+		'woocommerce-menu-cart' => 'Menu_Cart',
+		'woocommerce-product-content' => 'Product_Content',
+		'woocommerce-archive-description' => 'Archive_Description',
+		'woocommerce-checkout-page' => 'Checkout',
+		'woocommerce-cart' => 'Cart',
+		'woocommerce-my-account' => 'My_Account',
+		'woocommerce-purchase-summary' => 'Purchase_Summary',
+		'woocommerce-notices' => 'Notices',
+		'wc-single-elements' => 'Single_Elements',
+	];
 
 	protected $docs_types = [];
 	protected $use_mini_cart_template;
@@ -80,40 +126,7 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return [
-			'Archive_Products',
-			'Archive_Products_Deprecated',
-			'Archive_Description',
-			'Products',
-			'Products_Deprecated',
-
-			'Breadcrumb',
-			'Add_To_Cart',
-			'Elements',
-			'Single_Elements',
-			'Categories',
-			'Menu_Cart',
-
-			'Product_Title',
-			'Product_Images',
-			'Product_Price',
-			'Product_Add_To_Cart',
-			'Product_Rating',
-			'Product_Stock',
-			'Product_Meta',
-			'Product_Short_Description',
-			'Product_Content',
-			'Product_Data_Tabs',
-			'Product_Additional_Information',
-			'Product_Related',
-			'Product_Upsell',
-
-			'Purchase_Summary',
-			'Checkout',
-			'Cart',
-			'My_Account',
-			'Notices',
-		];
+		return API::filter_active_features( static::WIDGET_NAME_CLASS_NAME_MAP );
 	}
 
 	const RECOMMENDED_POSTS_WIDGET_NAMES = [
@@ -128,6 +141,13 @@ class Module extends Module_Base {
 		'woocommerce-product-content',
 		'woocommerce-product-data-tabs',
 		'woocommerce-product-additional-information',
+	];
+
+	// 'WC page name' => 'Elementor widget name'
+	const WC_STATUS_PAGES_MAPPED_TO_WIDGETS = [
+		'Cart' => 'woocommerce-cart',
+		'Checkout' => 'woocommerce-checkout-page',
+		'My account' => 'woocommerce-my-account',
 	];
 
 	public function add_product_post_class( $classes ) {
@@ -145,6 +165,10 @@ class Module extends Module_Base {
 	}
 
 	public function register_tags() {
+		if ( ! API::is_licence_has_feature( static::DYNAMIC_TAGS_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			return;
+		}
+
 		$tags = [
 			'Product_Gallery',
 			'Product_Image',
@@ -158,6 +182,7 @@ class Module extends Module_Base {
 			'Product_Terms',
 			'Product_Title',
 			'Category_Image',
+			'Woocommerce_Add_To_Cart',
 		];
 
 		/** @var \Elementor\Core\DynamicTags\Manager $module */
@@ -191,11 +216,17 @@ class Module extends Module_Base {
 	 * @param Documents_Manager $documents_manager
 	 */
 	public function register_documents( $documents_manager ) {
-		$this->docs_types = [
-			'product-post' => Product_Post::get_class_full_name(),
-			'product' => Product::get_class_full_name(),
-			'product-archive' => Product_Archive::get_class_full_name(),
-		];
+		if ( API::is_licence_has_feature( static::SINGLE_PRODUCT_TEMPLATE_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			$this->docs_types = [
+				'product-post' => Product_Post::get_class_full_name(),
+			];
+
+			$this->docs_types['product'] = Product::get_class_full_name();
+		}
+
+		if ( API::is_licence_has_feature( static::ARCHIVE_PRODUCT_TEMPLATE_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			$this->docs_types['product-archive'] = Product_Archive::get_class_full_name();
+		}
 
 		foreach ( $this->docs_types as $type => $class_name ) {
 			$documents_manager->register_document_type( $type, $class_name );
@@ -375,7 +406,7 @@ class Module extends Module_Base {
 			}
 
 			$fragment_data = $this->get_fragment_data( $element );
-			$total_fragments = count( $fragment_data );
+			$total_fragments = count( $fragment_data ) / 2;
 
 			for ( $i = 0; $i < $total_fragments; $i++ ) {
 				$fragments[ $fragment_data['selector'][ $i ] ] = $fragment_data['html'][ $i ];
@@ -513,6 +544,10 @@ class Module extends Module_Base {
 	}
 
 	public function register_admin_fields( Settings $settings ) {
+		if ( ! API::is_licence_has_feature( static::MENU_CART_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			return;
+		}
+
 		$settings->add_section( Settings::TAB_INTEGRATIONS, 'woocommerce', [
 			'callback' => function() {
 				echo '<hr><h2>' . esc_html__( 'WooCommerce', 'elementor-pro' ) . '</h2>';
@@ -536,25 +571,6 @@ class Module extends Module_Base {
 	}
 
 	/**
-	 * Add Query Arg to WC Ajax Endpoint.
-	 *
-	 * Adds the `elementor_page_id` query arg to the WooCommerce ajax endpoint, so we always know what page
-	 * an ajax call is coming from - used to load widgets before loading some WC content by ajax.
-	 * e.g. `?wc-ajax=%%endpoint%%&elementor_page_id=160`
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param $url
-	 * @return string
-	 */
-	public function add_query_arg_to_wc_ajax_endpoint( $url ) {
-		$url_components = wp_parse_url( $url );
-		parse_str( $url_components['query'], $url_query );
-		$url_query['elementor_page_id'] = get_queried_object_id();
-		return add_query_arg( $url_query, $url_components['path'] );
-	}
-
-	/**
 	 * Load Widget Before WooCommerce Ajax.
 	 *
 	 * When outputting the complex WooCommerce shortcodes (which we use in our widgets) e.g. Checkout, Cart, etc. WC
@@ -562,9 +578,8 @@ class Module extends Module_Base {
 	 * be autofilled by the current user's browser e.g. the Payment section holding the "Place order" button.
 	 *
 	 * This function runs before these ajax calls. Using the `elementorPageId` and `elementorWidgetId` querystring
-	 * appended to the forms `_wp_http_referer` url field, or the `elementor_page_id` querystring added to the
-	 * wc-ajax endpoint, it loads the relevant Elementor widget. The rendered Elementor widget replaces the
-	 * default WooCommerce template used to refresh WooCommerce elements in the page.
+	 * appended to the forms `_wp_http_referer` url field, or the referer page ID, it loads the relevant Elementor widget.
+	 * The rendered Elementor widget replaces the default WooCommerce template used to refresh WooCommerce elements in the page.
 	 *
 	 * This is necessary for example in the Checkout Payment section where we modify the Terms & Conditions text
 	 * using settings from the widget or when updating shipping methods on the Cart.
@@ -620,10 +635,8 @@ class Module extends Module_Base {
 			}
 		}
 
-		// If the page ID is not found in the referrer query string, the page ID is fetched from the `elementor_page_id` query string we added to WooCommerce ajax endpoint.
-		// e.g. `?wc-ajax=update_shipping_method&elementor_page_id=160`
 		if ( ! $page_id ) {
-			$page_id = ProUtils::_unstable_get_super_global_value( $_GET, 'elementor_page_id' );
+			$page_id = url_to_postid( wp_get_referer() );
 		}
 
 		// Bail if no `$page_id`.
@@ -639,7 +652,7 @@ class Module extends Module_Base {
 			return;
 		}
 
-		// Setup `elementor_page_id` as the WP global $post, so is available to our widgets.
+		// Setup $page_id as the WP global $post, so is available to our widgets.
 		$post = get_post( $page_id, OBJECT );
 		setup_postdata( $post );
 
@@ -740,7 +753,12 @@ class Module extends Module_Base {
 		$ajax->register_ajax_action( 'pro_woocommerce_mock_notices', [ $this, 'woocommerce_mock_notices' ] );
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function woocommerce_mock_notices( $data ) {
+		$document = ProUtils::_unstable_get_document_for_edit( $data['editor_post_id'] );
+
 		if ( in_array( 'wc_error', $data['notice_elements'], true ) ) {
 			$notice_message = sprintf(
 				'%1$s <a href="#" class="wc-backward">%2$s</a>',
@@ -1149,6 +1167,10 @@ class Module extends Module_Base {
 	 * @return boolean
 	 */
 	private function should_load_wc_notices_styles() {
+		if ( ! API::is_licence_has_feature( static::SITE_SETTINGS_NOTICES_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			return false;
+		}
+
 		$woocommerce_active = in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
 		$is_editor = ProUtils::_unstable_get_super_global_value( $_GET, 'elementor-preview' );
 
@@ -1307,8 +1329,10 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
-		add_action( 'elementor/kit/register_tabs', [ $this, 'init_site_settings' ], 1, 40 );
-		$this->add_update_kit_settings_hooks();
+		if ( API::is_licence_has_feature( static::SITE_SETTINGS_PAGES_LICENSE_FEATURE_NAME, API::BC_VALIDATION_CALLBACK ) ) {
+			add_action( 'elementor/kit/register_tabs', [ $this, 'init_site_settings' ], 1, 40 );
+			$this->add_update_kit_settings_hooks();
+		}
 
 		add_action( 'elementor/template-library/create_new_dialog_fields', [ $this, 'add_products_type_to_template_popup' ], 11 );
 		add_action( 'elementor-pro/modules/loop-builder/documents/loop/query_settings', [ $this, 'add_products_type_to_loop_settings_query' ], 11 );
@@ -1337,9 +1361,6 @@ class Module extends Module_Base {
 		add_filter( 'elementor/document/config', [ $this, 'add_loop_recommended_widgets' ], 11, 2 );
 
 		add_filter( 'elementor_pro/frontend/localize_settings', [ $this, 'localized_settings_frontend' ] );
-
-		// Add `elementor_page_id` query arg to WC Ajax Endpoint.
-		add_filter( 'woocommerce_ajax_get_endpoint', [ $this, 'add_query_arg_to_wc_ajax_endpoint' ] );
 
 		// Load our widget Before WooCommerce Ajax. See the variable's PHPDoc for details.
 		add_action( 'woocommerce_checkout_update_order_review', [ $this, 'load_widget_before_wc_ajax' ] );
@@ -1425,6 +1446,46 @@ class Module extends Module_Base {
 		add_filter( 'elementor/query/query_args', function( $query_args, $widget ) {
 			return $this->loop_query( $query_args, $widget );
 		}, 10, 2 );
+
+		add_filter( 'woocommerce_rest_prepare_system_status', function( $response, $system_status, $request ) {
+			return $this->add_system_status_data( $response, $system_status, $request );
+		}, 10, 3 );
+
+		add_filter( 'elementor/editor/localize_settings', function ( $config ) {
+			return $this->populate_persistent_settings( $config );
+		});
+	}
+
+	public function add_system_status_data( $response, $system_status, $request ) {
+		foreach ( $response->data['pages'] as $index => $wc_page ) {
+			$this->modify_response_if_widget_exists_in_page( $wc_page, $response, $index );
+		}
+
+		return $response;
+	}
+
+	private function modify_response_if_widget_exists_in_page( $wc_page, &$response, $index ) {
+		if ( empty( $wc_page['page_name'] ) || empty( $wc_page['page_id'] ) || ! array_key_exists( $wc_page['page_name'], static::WC_STATUS_PAGES_MAPPED_TO_WIDGETS ) ) {
+			return;
+		}
+
+		if ( isset( $wc_page['shortcode_present'] ) && false !== $wc_page['shortcode_present'] ) {
+			return;
+		}
+
+		$document = Plugin::elementor()->documents->get( $wc_page['page_id'] );
+
+		if ( ! $document || ! $document->is_built_with_elementor() ) {
+			return;
+		}
+
+		$elementor_data = get_post_meta( $wc_page['page_id'], '_elementor_data', true );
+		$widget_name = static::WC_STATUS_PAGES_MAPPED_TO_WIDGETS[ $wc_page['page_name'] ];
+		$widget_exists_in_page = false !== strpos( $elementor_data, $widget_name );
+
+		if ( $widget_exists_in_page ) {
+			$response->data['pages'][ $index ]['shortcode_present'] = true;
+		}
 	}
 
 	public function loop_query( $query_args, $widget ) {
@@ -1432,7 +1493,7 @@ class Module extends Module_Base {
 			return $query_args;
 		}
 
-		return $this->parse_loop_query_args( $widget );
+		return $this->parse_loop_query_args( $widget, $query_args );
 	}
 
 	private function is_product_query( $widget ) {
@@ -1441,7 +1502,7 @@ class Module extends Module_Base {
 		return ( ! empty( $widget_config['is_loop'] ) && 'product' === $widget->get_current_skin_id() );
 	}
 
-	private function parse_loop_query_args( $widget ) {
+	private function parse_loop_query_args( $widget, $query_args ) {
 		$settings = $this->adjust_setting_for_product_renderer( $widget );
 
 		// For Products_Renderer.
@@ -1451,10 +1512,15 @@ class Module extends Module_Base {
 
 		$shortcode = Products_Widget::get_shortcode_object( $settings );
 
-		$query_args = $shortcode->parse_query_args();
-		unset( $query_args['fields'] );
+		$parsed_query_args = $shortcode->parse_query_args();
 
-		return $query_args;
+		unset( $parsed_query_args['fields'] );
+
+		$override_various_query_args = array_filter( $query_args, function( $key ) {
+			return in_array( $key, [ 'posts_per_page', 'offset', 'paged' ], true );
+		}, ARRAY_FILTER_USE_KEY );
+
+		return wp_parse_args( $override_various_query_args, $parsed_query_args );
 	}
 
 	private function adjust_setting_for_product_renderer( $widget ) {
@@ -1512,6 +1578,14 @@ class Module extends Module_Base {
 		$config['panel']['widgets_settings']['woocommerce-product-images'] = [
 			'show_in_panel' => false,
 		];
+		return $config;
+	}
+
+	private function populate_persistent_settings( array $config ) {
+		$config['persistent_keys'] = array_key_exists( 'persistent_keys', $config ) ?
+				array_merge( $config['persistent_keys'], self::WC_PERSISTENT_SITE_SETTINGS ) :
+				self::WC_PERSISTENT_SITE_SETTINGS;
+
 		return $config;
 	}
 }

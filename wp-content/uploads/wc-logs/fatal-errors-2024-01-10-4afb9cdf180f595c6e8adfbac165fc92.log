@@ -1,0 +1,180 @@
+2024-01-10T05:42:11+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:42:13+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:42:15+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:42:17+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:44:25+00:00 CRITICAL Uncaught Error: Cannot use object of type WP_Error as array in C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\template-library\sources\local.php:897
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\template-library\manager.php(442): Elementor\TemplateLibrary\Source_Local->import_template()
+#1 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\template-library\manager.php(651): Elementor\TemplateLibrary\Manager->direct_import_template()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(324): Elementor\TemplateLibrary\Manager->handle_direct_actions()
+#3 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#4 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#5 C:\OSPanel\domains\polytechnew\wp-admin\admin-ajax.php(188): do_action()
+#6 {main}
+  thrown in C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\template-library\sources\local.php on line 897
+
+2024-01-10T05:44:55+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:44:56+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:45:32+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:10+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:11+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:13+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:13+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:14+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:27+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:46:29+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:47:02+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T05:47:31+00:00 CRITICAL Uncaught Error: Unsupported operand types in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php:72
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): Unicamp_Elementor\Modify_Widget_Form->section_form_fields()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(1662): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\forms\widgets\form.php(584): Elementor\Controls_Stack->end_controls_section()
+#5 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\controls-stack.php(2358): ElementorPro\Modules\Forms\Widgets\Form->register_controls()
+#6 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\includes\base\widget-base.php(1044): Elementor\Controls_Stack->ini in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\elementor\widgets\original\form.php on line 72
+
+2024-01-10T06:56:18+00:00 CRITICAL Uncaught Error: Call to a member function get_edit_url() on bool in C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\theme-builder\classes\conditions-manager.php:152
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\theme-builder\classes\conditions-manager.php(172): ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager->get_conditions_conflicts_by_location()
+#1 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\theme-builder\classes\conditions-manager.php(109): ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager->get_conditions_conflicts()
+#2 [internal function]: ElementorPro\Modules\ThemeBuilder\Classes\Conditions_Manager->ajax_check_conditions_conflicts()
+#3 C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor\core\common\modules\ajax\module.php(176): call_user_func()
+#4 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(324): Elementor\Core\Common\Modules\Ajax\Module->handle_ajax_request()
+#5  in C:\OSPanel\domains\polytechnew\wp-content\plugins\elementor-pro\modules\theme-builder\classes\conditions-manager.php on line 152
+
