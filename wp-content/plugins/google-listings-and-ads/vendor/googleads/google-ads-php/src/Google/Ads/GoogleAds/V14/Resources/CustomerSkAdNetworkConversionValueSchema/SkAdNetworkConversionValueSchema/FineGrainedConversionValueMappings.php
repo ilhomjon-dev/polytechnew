@@ -39,7 +39,6 @@ class FineGrainedConversionValueMappings extends \Google\Protobuf\Internal\Messa
      *     @type int $fine_grained_conversion_value
      *           Output only. Fine grained conversion value. Valid values are in the
      *           inclusive range [0,63].
-     *     @type \Google\Ads\GoogleAds\V14\Resources\CustomerSkAdNetworkConversionValueSchema\SkAdNetworkConversionValueSchema\ConversionValueMapping $conversion_value_mapping
      *           Output only. Conversion events the fine grained conversion value maps
      *           to.
      * }
