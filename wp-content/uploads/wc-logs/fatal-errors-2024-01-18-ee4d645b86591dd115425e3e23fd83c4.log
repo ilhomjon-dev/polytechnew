@@ -1,0 +1,4 @@
+2024-01-18T04:43:12+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\class-wp-theme.php on line 1326
+
+2024-01-18T04:44:05+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+
