@@ -38,8 +38,7 @@ define( 'DB_CHARSET', 'utf8mb4' );
 define( 'DB_COLLATE', '' );
 
 
-define('WP_HOME ',"http://polytechdev.tj");
-define('WP_SITEURL  ',"http://polytechdev.tj");
+
 /**#@+
  * Authentication unique keys and salts.
  *
