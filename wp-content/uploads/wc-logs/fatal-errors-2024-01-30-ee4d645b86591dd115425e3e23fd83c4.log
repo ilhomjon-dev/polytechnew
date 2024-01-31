@@ -1,0 +1,4 @@
+2024-01-30T03:39:33+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-content\plugins\header-footer-elementor\inc\widgets-manager\widgets\class-site-logo.php on line 25
+
+2024-01-30T07:29:00+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-content\plugins\pinterest-for-woocommerce\src\Product\GoogleCategorySearch.php on line 87
+
