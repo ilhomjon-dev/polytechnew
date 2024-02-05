@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 2024-01-24T02:59:44+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-content\plugins\polylang\admin\admin-filters-columns.php on line 448
 
 2024-01-24T03:00:46+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
 
 2024-01-24T04:32:22+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+=======
+2024-01-24T03:26:41+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
+
+2024-01-24T04:47:55+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+>>>>>>> Stashed changes
 

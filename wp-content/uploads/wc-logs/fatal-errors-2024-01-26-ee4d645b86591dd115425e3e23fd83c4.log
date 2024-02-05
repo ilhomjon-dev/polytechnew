@@ -1,4 +1,12 @@
+<<<<<<< Updated upstream
 2024-01-26T04:32:11+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
 
 2024-01-26T04:37:42+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+=======
+2024-01-26T02:40:56+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+
+2024-01-26T05:19:17+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
+
+2024-01-26T05:20:40+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
+>>>>>>> Stashed changes
 

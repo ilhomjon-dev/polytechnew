@@ -1,0 +1,6 @@
+2024-01-31T03:01:59+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-admin\includes\plugin.php on line 303
+
+2024-01-31T03:08:21+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
+
+2024-01-31T04:33:34+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+

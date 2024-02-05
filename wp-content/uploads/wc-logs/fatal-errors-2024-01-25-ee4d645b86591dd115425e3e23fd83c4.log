@@ -1,2 +1,8 @@
+<<<<<<< Updated upstream
 2024-01-25T03:00:10+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
+=======
+2024-01-25T02:59:47+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Exception.php on line 67
+
+2024-01-25T03:00:34+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 205
+>>>>>>> Stashed changes
 
