@@ -163,3 +163,45 @@ function unicamp_has_elementor_template( $location ) {
 
 	return false;
 }
+
+function display_pages_by_category( $atts ) {
+    // Extract shortcode attributes
+    $atts = shortcode_atts( array(
+        'category' => '', // Category slug
+		'title'=>''
+    ), $atts );
+
+    // Get the current category being displayed
+    $current_category = get_queried_object();
+$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+    // Query pages by category
+    $args = array(
+		'paged' => $paged,
+        'posts_per_page' => -1,
+        'category_name'  => $atts['category'],
+        'orderby'        => 'menu_order',
+        'order'          => 'ASC',
+    );
+    $pages_query = new WP_Query( $args );
+
+    // Display pages
+    $output = '<ul>';
+    if ( $pages_query->have_posts() ) {
+        while ( $pages_query->have_posts() ) {
+            $pages_query->the_post();
+            $active_class = ($current_category->slug === $atts['category']) ? 'active' : '';
+            $output .= '<li class="' . $active_class . '"><a href="' . get_permalink() . '">' . get_the_title(). '</a></li>';
+        }
+    } else {
+        $output .= '<li>No pages found</li>';
+    }
+    $output .= '</ul>';
+
+    // Restore global post data
+    wp_reset_postdata();
+
+    return $output;
+}
+add_shortcode( 'pages_by_category', 'display_pages_by_category' );
+
+

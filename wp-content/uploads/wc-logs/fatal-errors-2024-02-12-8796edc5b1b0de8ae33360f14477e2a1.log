@@ -1,0 +1,27 @@
+2024-02-12T04:38:55+00:00 CRITICAL Uncaught Error: Call to undefined function mysql_query() in C:\OSPanel\domains\polytechnew\wp-content\plugins\page-lists-plus\page-lists-plus.php:55
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(324): page_lists_plus_install()
+#1 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(517): WP_Hook->do_action()
+#3 C:\OSPanel\domains\polytechnew\wp-admin\includes\plugin.php(693): do_action()
+#4 C:\OSPanel\domains\polytechnew\wp-admin\plugins.php(58): activate_plugin()
+#5 {main}
+  thrown in C:\OSPanel\domains\polytechnew\wp-content\plugins\page-lists-plus\page-lists-plus.php on line 55
+
+2024-02-12T05:24:25+00:00 CRITICAL syntax error, unexpected '$active_class' (T_VARIABLE) in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\framework\class-functions.php on line 192
+
+2024-02-12T05:26:15+00:00 CRITICAL syntax error, unexpected ''</a></li>'' (T_CONSTANT_ENCAPSED_STRING) in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\framework\class-functions.php on line 192
+
+2024-02-12T06:01:22+00:00 CRITICAL Uncaught Error: Cannot use object of type WP_Post as array in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\framework\class-functions.php:192
+Stack trace:
+#0 C:\OSPanel\domains\polytechnew\wp-includes\shortcodes.php(433): display_pages_by_category()
+#1 [internal function]: do_shortcode_tag()
+#2 C:\OSPanel\domains\polytechnew\wp-includes\shortcodes.php(273): preg_replace_callback()
+#3 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-hook.php(326): do_shortcode()
+#4 C:\OSPanel\domains\polytechnew\wp-includes\plugin.php(205): WP_Hook->apply_filters()
+#5 C:\OSPanel\domains\polytechnew\wp-includes\widgets\class-wp-widget-block.php(81): apply_filters()
+#6 C:\OSPanel\domains\polytechnew\wp-includes\class-wp-widget.php(394): WP_Widget_Block->widget()
+#7 C:\OSPanel\domains\polytechnew\wp-includes\widgets.php(837): WP_Widget->display_callback()
+#8 C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\framework\class-sidebar.php(116): dynamic_sidebar()
+#9 C:\OSPanel\domains\polytechnew\wp-content\themes in C:\OSPanel\domains\polytechnew\wp-content\themes\unicamp\framework\class-functions.php on line 192
+
