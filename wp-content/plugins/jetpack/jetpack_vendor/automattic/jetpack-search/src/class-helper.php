@@ -826,7 +826,7 @@ class Helper {
 		$prefix         = Options::OPTION_PREFIX;
 		$posts_per_page = (int) get_option( 'posts_per_page' );
 		if ( ( $posts_per_page > 20 ) || ( $posts_per_page <= 0 ) ) {
-			$posts_per_page = 20;
+			$posts_per_page = 100;
 		}
 
 		$excluded_post_types   = get_option( $prefix . 'excluded_post_types' ) ? explode( ',', get_option( $prefix . 'excluded_post_types', '' ) ) : array();
