@@ -1,6 +1,0 @@
-2024-01-31T06:37:28+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-includes\Requests\src\Transport\Curl.php on line 510
-
-2024-01-31T08:22:57+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-content\plugins\woocommerce\includes\tracks\events\class-wc-settings-tracking.php on line 245
-
-2024-01-31T08:23:04+00:00 CRITICAL Maximum execution time of 60 seconds exceeded in C:\OSPanel\domains\polytech\polytechnew\wp-content\plugins\woocommerce\src\Internal\ProductDownloads\ApprovedDirectories\Admin\UI.php on line 463
-
