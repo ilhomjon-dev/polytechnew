@@ -13,7 +13,5 @@
  * @since   1.0
  */
 get_header();
-
 unicamp_load_template( 'page/content-single' );
-
 get_footer();

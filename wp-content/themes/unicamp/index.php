@@ -30,7 +30,17 @@ get_header();
 							<?php the_content(); ?>
 
 						<?php endwhile; ?>
-
+/////////////////////
+					
+					<?php global $current_user; wp_get_current_user(); ?>
+<?php 
+if ( is_user_logged_in() ) { 
+  echo 'Username: ' . $current_user->user_login . "\n"; 
+  echo 'User display name: ' . $current_user->display_name . "\n"; 
+} else { 
+  wp_loginout(); 
+} ?>
+					//////////////////////
 						<?php the_posts_navigation(); ?>
 
 					<?php else : ?>
@@ -41,7 +51,10 @@ get_header();
 				<?php Unicamp_Sidebar::instance()->render( 'right' ); ?>
 
 			</div>
+
+
 		</div>
 	</div>
+
 <?php get_footer();
 
