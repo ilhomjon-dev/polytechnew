@@ -14,4 +14,8 @@
  */
 get_header();
 unicamp_load_template( 'page/content-single' );
+
+
+// Check if the current post has an author
+
 get_footer();

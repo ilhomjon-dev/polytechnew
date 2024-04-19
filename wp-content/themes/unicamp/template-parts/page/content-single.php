@@ -45,5 +45,32 @@ defined( 'ABSPATH' ) || exit;
 			<?php Unicamp_Sidebar::instance()->render( 'right' ); ?>
 
 		</div>
+		<div class='info-box'>
+		
+	
+		
+		
+	<?
+	if (get_the_author()) {
+    // Get the author ID
+    $author_id = get_the_author_meta('ID');
+
+    // Get the full name of the author
+    $author_full_name = get_the_author_meta('last_name', $author_id) . ' ' .get_the_author_meta('first_name', $author_id);
+
+    // If full name is not available, fall back to display name
+    if (empty($author_full_name)) {
+        $author_full_name = get_the_author();
+    }
+
+    // Output the author name
+    echo '<span class="notItalic" >Шахсони масъули ин қисми сомона: </span><span>' . $author_full_name.'</span>';
+} else {
+    // If no author is found
+    echo 'Author not found';
+}?>
+		
+		</div>
 	</div>
+	
 </div>
