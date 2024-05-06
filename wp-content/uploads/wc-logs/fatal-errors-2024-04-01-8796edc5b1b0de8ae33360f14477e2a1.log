@@ -1,2 +1,0 @@
-2024-04-01T10:48:38+00:00 CRITICAL Out of memory (allocated 88080384) (tried to allocate 20480 bytes) in C:\OSPanel\domains\polytechnew\wp-includes\functions.php on line 4855
-

@@ -182,16 +182,30 @@ if ( ! class_exists( 'Unicamp_Actions_Filters' ) ) {
 		 * Apply filters to the search query.
 		 * Determines if we only want to display posts/pages and changes the query accordingly
 		 */
-		public function search_filter( $query ) {
-			if ( $query->is_main_query() && $query->is_search ) {
-				$filter = Unicamp::setting( 'search_page_filter' );
-				if ( $filter !== 'all' ) {
-					$query->set( 'post_type', $filter );
-				}
-			}
+// 		public function search_filter( $query ) {
+// 			if ( $query->is_main_query() && $query->is_search ) {
+// 				$filter = Unicamp::setting( 'search_page_filter' );
+// 				if ( $filter !== 'all' ) {
+// 					$query->set( 'post_type', $filter );
+// 				}
+// 			}
 
-			return $query;
-		}
+// 			return $query;
+// 		}
+
+
+public function search_filter( $query ) {
+    if ( $query->is_main_query() && $query->is_search ) {
+        $filter = Unicamp::setting( 'search_page_filter' );
+        if ( $filter !== 'all' ) {
+            // Add 'page' to the post types being searched
+            $post_types = array( $filter, 'page' );
+            $query->set( 'post_type', $post_types );
+        }
+    }
+
+    return $query;
+}
 
 		/**
 		 * Make wordpress respect the search template on an empty search
